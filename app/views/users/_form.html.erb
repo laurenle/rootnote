@@ -12,18 +12,18 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
 
   <div class="field">
-    <%= f.label :password_hash %>
-    <%= f.text_field :password_hash %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
   </div>
 
   <div class="actions">
