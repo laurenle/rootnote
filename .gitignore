@@ -19,3 +19,8 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore temporary files
+*.swp
+*.swo
+.DS_Store
