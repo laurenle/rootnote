@@ -4,7 +4,8 @@ class FoldersController < ApplicationController
   # GET /folders
   # GET /folders.json
   def index
-    @folders = Folder.all
+    @user = current_user
+    @folders = @user.folders
   end
 
   # GET /folders/1
@@ -14,6 +15,7 @@ class FoldersController < ApplicationController
 
   # GET /folders/new
   def new
+    @user = current_user
     @folder = Folder.new
   end
 
@@ -24,6 +26,7 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
+    @user = current_user
     @folder = Folder.new(folder_params)
 
     respond_to do |format|
@@ -63,12 +66,13 @@ class FoldersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
     def set_folder
       @folder = Folder.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def folder_params
-      params.require(:folder).permit(:name)
+      params.require(:folder).permit(:name, :user_id)
     end
 end

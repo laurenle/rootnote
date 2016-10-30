@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20161030184337) do
 
   create_table "folders", force: :cascade do |t|
     t.string   "name"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -21,6 +22,7 @@ ActiveRecord::Schema.define(version: 20161030184337) do
   create_table "notes", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
+    t.integer  "folder_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
