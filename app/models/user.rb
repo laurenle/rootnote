@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   validates :name, :email, :password_hash, presence: true
   validates :email, uniqueness: true
   has_many :folders, dependent: :destroy
-  has_many :notes, dependent: :destroy
   validate :valid_email?
 
   def password
