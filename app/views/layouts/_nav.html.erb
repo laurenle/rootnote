@@ -1,0 +1,8 @@
+<nav class="nav-banner">
+  <a class="nav-btn" href="/">Home</a>
+  <a class="nav-btn" href="/folders">Folders</a>
+  <a class="nav-btn" href="/notes">All notes</a>
+  <% if logged_in? -%><%= link_to current_user.name, current_user %> | <%= link_to 'Log out', '/logout', method: :delete %>
+  <% else -%><%= link_to 'Log in', '/login' %> | <%= link_to 'Sign up', '/users/new', method: :get %><% end -%>
+  </span>
+</nav>
