@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<style>
+body {margin: 20pt 20pt 20pt 20pt; font: 12pt sans-serif;}
+h1 {margin: 0 0 10pt 0; font-size: 16pt;}
+input, button, select {font: inherit; margin: 0 3pt 3pt 0;}
+
+input#fontsize {width: 20pt;}
+button#bold {font-weight: bold;}
+button#italic {font-style: italic;}
+button#underline {text-decoration: underline;}
+
+#editor {width: 450pt; height: 300pt; margin: 5pt 0 10pt 0; padding: 10pt; border: 1px solid #000;}
+
+#output {width: 450pt; height: 300pt; padding: 10pt;}
+
+ul, ol {margin: 0;}
+</style>
+</head>
+<body>
+<h1>WYSIWYG Editor</h1>
+<select id ="fontsize" onchange="fontsize()">
+	<option value="10pt">10 pt</option>
+	<option value="12pt">12 pt</option>
+	<option value="14pt">14 pt</option>
+</select>
+<select id="fontcolor" onchange="fontcolor()">
+	<option value="black">Black</option>
+	<option value="blue">Blue</option>
+	<option value="red">Red</option>
+</select>
+<button id="bold" onclick="b()">B</button>
+<button id="italic" onclick="i()">I</button>
+<button id="underline"  onclick="u()">U</button><br>
+<button id="bullet" onclick="bullet()">Bulleted</button>
+<button id="numbered" onclick="numbered()">Numbered</button><br>
+<button id="clearformat" onclick="clearformat()">Clear formatting</button>
+<div id="editor" contentEditable="true"></div>
+HTML Output
+<button id="refresh" onclick="refreshoutput()">Refresh</button><br>
+<textarea id="output"></textarea>
+<script>
+// Update font values to where the cursor is
+function updateselections() {
+	// Get element selection is in
+	var selection = window.getSelection().anchorNode;
+	selection = selection.nodeType === 3 ? selection.parentNode : selection;
+	
+	// Get values
+	var size = selection.style.getPropertyValue("font-size") || "12pt";
+	var color = selection.style.getPropertyValue("color") || "black";
+	
+	// Set selections
+	$("#fontsize").val(size);
+	$("#fontcolor").val(color);
+}
+$("#editor").mouseup(updateselections);
+$("#editor").keyup(updateselections);
+
+// Font size; execCommand doesn't support CSS size values, so this uses HTML
+// font size and then goes back and changes it to correct value
+function fontsize() {
+	document.execCommand("fontSize", false, 1);
+	var el = $("#editor").find("font[size='1']");
+	el.removeAttr("size").css("font-size", $("#fontsize").val());
+}
+
+// Font color; similar to font size, converts to CSS value
+function fontcolor() {
+	document.execCommand("foreColor", false, "black");
+	var el = $("#editor").find("font[color='black']");
+	el.removeAttr("color").css("color", $("#fontcolor").val());
+}
+
+// Bold
+function b() {
+	document.execCommand("bold", false, null);
+}
+
+// Italic
+function i() {
+	document.execCommand("italic", false, null);
+}
+
+// Underline
+function u() {
+	document.execCommand("underline", false, null);
+}
+
+// Bulleted list
+function bullet() {
+	document.execCommand("insertUnorderedList", false, null);
+}
+
+// Numbered list
+function numbered() {
+	document.execCommand("insertOrderedList", false, null);
+}
+
+// Clear formatting
+function clearformat() {
+	document.execCommand("removeFormat", false, null);
+}
+
+// Refresh output
+function refreshoutput() {
+	$("#output").text($("#editor").html());
+}
+</script>
+</body>
+</html>
