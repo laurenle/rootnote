@@ -16,20 +16,39 @@ button#underline {text-decoration: underline;}
 
 #output {width: 450pt; height: 300pt; padding: 10pt;}
 
+/* Note styles */
 ul, ol {margin: 0;}
+font[size="1"] {font-size: 10pt;}
+font[size="2"] {font-size: 12pt;}
+font[size="3"] {font-size: 14pt;}
+font[size="4"] {font-size: 16pt;}
+font[size="5"] {font-size: 18pt;}
+font[size="6"] {font-size: 20pt;}
+font[size="7"] {font-size: 22pt;}
 </style>
 </head>
 <body>
 <h1>WYSIWYG Editor</h1>
 <select id ="fontsize" onchange="fontsize()">
-	<option value="10pt">10 pt</option>
-	<option value="12pt">12 pt</option>
-	<option value="14pt">14 pt</option>
+	<option value="-">-</option>
+	<option value="1">10 pt</option>
+	<option value="2">12 pt</option>
+	<option value="3">14 pt</option>
+	<option value="4">16 pt</option>
+	<option value="5">18 pt</option>
+	<option value="6">20 pt</option>
+	<option value="7">22 pt</option>
 </select>
 <select id="fontcolor" onchange="fontcolor()">
-	<option value="black">Black</option>
-	<option value="blue">Blue</option>
-	<option value="red">Red</option>
+	<option value="-">-</option>
+	<option value="rgb(0,0,0)">Black</option>
+	<option value="rgb(255,0,0)">Red</option>
+	<option value="rgb(255,127,0)">Orange</option>
+	<option value="rgb(255,255,0)">Yellow</option>
+	<option value="rgb(0,255,0)">Green</option>
+	<option value="rgb(0,0,255)">Blue</option>
+	<option value="rgb(127,0,255)">Purple</option>
+	<option value="rgb(255,0,127)">Pink</option>
 </select>
 <button id="bold" onclick="b()">B</button>
 <button id="italic" onclick="i()">I</button>
@@ -44,13 +63,32 @@ HTML Output
 <script>
 // Update font values to where the cursor is
 function updateselections() {
-	// Get element selection is in
-	var selection = window.getSelection().anchorNode;
-	selection = selection.nodeType === 3 ? selection.parentNode : selection;
+	// Get font elements defining color and size for start and end of selection
+	// TODO: Figure out how to check children too..
+	var selection1 = window.getSelection().anchorNode;
+	var selection2 = window.getSelection().focusNode;
+	var selection1color = selection1;
+	while (selection1color && (selection1color.nodeType !== 1 || !selection1color.hasAttribute("color"))) {
+		selection1color = selection1color.parentNode;
+	}
+	var selection2color = selection2;
+	while (selection2color && (selection2color.nodeType !== 1 || !selection2color.hasAttribute("color"))) {
+		selection2color = selection2color.parentNode;
+	}
+	var selection1size = selection1;
+	while (selection1size && (selection1size.nodeType !== 1 || !selection1size.hasAttribute("size"))) {
+		selection1size = selection1size.parentNode;
+	}
+	var selection2size = selection2;
+	while (selection2size && (selection2size.nodeType !== 1 || !selection2size.hasAttribute("size"))) {
+		selection2size = selection2size.parentNode;
+	}
 	
 	// Get values
-	var size = selection.style.getPropertyValue("font-size") || "12pt";
-	var color = selection.style.getPropertyValue("color") || "black";
+	var size = $(selection1size).attr("size") === $(selection2size).attr("size") ?
+		$(selection1size).attr("size") || "2" : "-";
+	var color = $(selection1color).attr("color") === $(selection2color).attr("color") ?
+		$(selection1color).attr("color") || "rgb(0,0,0)" : "-";
 	
 	// Set selections
 	$("#fontsize").val(size);
@@ -59,19 +97,14 @@ function updateselections() {
 $("#editor").mouseup(updateselections);
 $("#editor").keyup(updateselections);
 
-// Font size; execCommand doesn't support CSS size values, so this uses HTML
-// font size and then goes back and changes it to correct value
+// Font size
 function fontsize() {
-	document.execCommand("fontSize", false, 1);
-	var el = $("#editor").find("font[size='1']");
-	el.removeAttr("size").css("font-size", $("#fontsize").val());
+	document.execCommand("fontSize", false, parseInt($("#fontsize").val()));
 }
 
-// Font color; similar to font size, converts to CSS value
+// Font color
 function fontcolor() {
-	document.execCommand("foreColor", false, "black");
-	var el = $("#editor").find("font[color='black']");
-	el.removeAttr("color").css("color", $("#fontcolor").val());
+	document.execCommand("foreColor", false, $("#fontcolor").val());
 }
 
 // Bold
