@@ -27,5 +27,5 @@
 <br>
 
 <% if defined? folder %>
-  <%= link_to 'New Note', new_folder_note_path(folder, Note.new()) %>
+  <%= link_to "Create note in #{folder.name}", new_folder_note_path(folder, Note.new()) %> | 
 <% end %>

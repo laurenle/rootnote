@@ -2,5 +2,5 @@
 
 <%= render 'form', folder: @folder %>
 
-<%= link_to 'Show', @folder %> |
-<%= link_to 'Back', folders_path %>
+<%= link_to 'Back to all folders', folders_path %> | 
+<%= link_to "Go to #{@folder.name}", @folder %>
