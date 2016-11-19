@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   def valid_email?
     unless name.nil? || name.empty?
-      matches = email.match(/\A[a-z|\d]+[@][a-z]+.[a-z]+\z/)
+      matches = email.match(/\A([a-z|\d])(\.?([a-z|\d]))*+[@](([a-z|\d])\.?)*[a-z]+\z/)
       errors.add(:email, 'Invalid email address') if matches.to_s.empty?
     end
   end
