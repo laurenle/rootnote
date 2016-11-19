@@ -1,11 +1,19 @@
 class NotesController < ApplicationController
-  before_action :confirm_folder_ownership
+  before_action :confirm_folder_ownership, except: [:user_notes]
   before_action :set_folder_note, only: [:show, :edit, :update, :destroy]
 
   # GET /folders/1/notes
   # GET /notes.json
   def index
     @notes = Note.all
+  end
+
+  # GET /notes
+  def user_notes
+    @notes = []
+    current_user.folders.each do |f|
+      @notes.concat(f.notes)
+    end
   end
 
   # GET /folders/1/notes/1
