@@ -10,5 +10,5 @@
   <%= @note.body %>
 </p>
 
-<%= link_to 'Edit', edit_note_path(@note) %> |
-<%= link_to 'Back', notes_path %>
+<%= link_to 'Edit', edit_folder_note_path(@folder, @note) %> |
+<%= link_to 'Back', folder_path(@folder) %>

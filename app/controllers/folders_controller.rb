@@ -11,6 +11,7 @@ class FoldersController < ApplicationController
   # GET /folders/1
   # GET /folders/1.json
   def show
+    @notes = @folder.notes
   end
 
   # GET /folders/new
