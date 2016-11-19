@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+  before_action :confirm_folder_ownership
   before_action :set_folder_note, only: [:show, :edit, :update, :destroy]
 
   # GET /folders/1/notes
@@ -68,6 +69,11 @@ class NotesController < ApplicationController
     def set_folder_note
       @folder = Folder.find(params[:folder_id])
       @note = Note.find(params[:id])
+    end
+
+    def confirm_folder_ownership
+      folder = Folder.find(params[:folder_id])
+      redirect_to folders_url unless folder.user_id == current_user.id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,5 +1,5 @@
 class FoldersController < ApplicationController
-  before_action :set_folder, only: [:show, :edit, :update, :destroy]
+  before_action :set_folder, :confirm_folder_ownership, only: [:show, :edit, :update, :destroy]
 
   # GET /folders
   # GET /folders.json
@@ -70,6 +70,10 @@ class FoldersController < ApplicationController
 
     def set_folder
       @folder = Folder.find(params[:id])
+    end
+
+    def confirm_folder_ownership
+      redirect_to folders_url unless @folder.user_id == current_user.id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
