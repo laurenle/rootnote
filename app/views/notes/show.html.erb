@@ -1,13 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @note.title %>
+  <h2><%= @note.title %></h2>
 </p>
 
 <p>
-  <strong>Body:</strong>
-  <%= @note.body %>
+  <%= sanitize @note.body %>
 </p>
 
 <%= link_to "Edit #{@note.title}", edit_folder_note_path(@folder, @note) %> |
