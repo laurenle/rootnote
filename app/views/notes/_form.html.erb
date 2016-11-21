@@ -1,4 +1,4 @@
-<%= form_for(note) do |f| %>
+<%= form_for([@folder, @note]) do |f| %>
   <% if note.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(note.errors.count, "error") %> prohibited this note from being saved:</h2>
@@ -19,6 +19,11 @@
   <div class="field">
     <%= f.label :body %>
     <%= f.text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= f.label :folder_id %>
+    <%= f.hidden_field :folder_id, value: @folder.id %>
   </div>
 
   <div class="actions">
