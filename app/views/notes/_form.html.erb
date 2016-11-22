@@ -16,17 +16,10 @@
     <%= f.text_field :title %>
   </div>
 
-  <div class="field">
-    <%= f.label :body %>
-    <%= f.text_area :body %>
-  </div>
+  <%= f.text_area :body, id: 'output' %>
 
   <div class="field">
     <%= f.label :folder_id %>
     <%= f.hidden_field :folder_id, value: @folder.id %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
   </div>
 <% end %>

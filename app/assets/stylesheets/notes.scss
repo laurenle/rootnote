@@ -1,3 +1,17 @@
 // Place all the styles related to the Notes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#editor {width: 450pt; height: 300pt; margin: 5pt 0 10pt 0; padding: 10pt; border: 1px solid #000;}
+
+#output {display: none;}
+
+/* Note styles */
+font[size="1"] {font-size: 10pt;}
+font[size="2"] {font-size: 12pt;}
+font[size="3"] {font-size: 14pt;}
+font[size="4"] {font-size: 16pt;}
+font[size="5"] {font-size: 18pt;}
+font[size="6"] {font-size: 20pt;}
+font[size="7"] {font-size: 22pt;}
+ul, ol {margin: 0;}

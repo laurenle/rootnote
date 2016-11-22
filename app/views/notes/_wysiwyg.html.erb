@@ -1,0 +1,31 @@
+<select id ="fontsize" onchange="fontsize()">
+<option value="-">-</option>
+<option value="1">10 pt</option>
+<option value="2">12 pt</option>
+<option value="3">14 pt</option>
+<option value="4">16 pt</option>
+<option value="5">18 pt</option>
+<option value="6">20 pt</option>
+<option value="7">22 pt</option>
+</select>
+<select id="fontcolor" onchange="fontcolor()">
+<option value="-">-</option>
+<option value="rgb(0,0,0)">Black</option>
+<option value="rgb(255,0,0)">Red</option>
+<option value="rgb(255,127,0)">Orange</option>
+<option value="rgb(255,255,0)">Yellow</option>
+<option value="rgb(0,255,0)">Green</option>
+<option value="rgb(0,0,255)">Blue</option>
+<option value="rgb(127,0,255)">Purple</option>
+<option value="rgb(255,0,127)">Pink</option>
+</select>
+<button id="bold" onclick="b()">B</button>
+<button id="italic" onclick="i()">I</button>
+<button id="underline"  onclick="u()">U</button><br>
+<button id="bullet" onclick="bullet()">Bulleted</button>
+<button id="numbered" onclick="numbered()">Numbered</button><br>
+<button id="image" onclick="image()">Image</button>
+<input type="text" id="imgurl" placeholder="Image URL"></input><br>
+<button id="clearformat" onclick="clearformat()">Clear formatting</button>
+<div id="editor" contentEditable="true"></div>
+<button id="submit" onclick="submit()">Save changes</button>
