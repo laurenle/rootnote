@@ -12,4 +12,11 @@
  *
  *= require_tree .
  *= require_self
- */
+*/
+
+@import "bootstrap";
+@import "bootstrap/theme";
+
+body {
+  font-size: 62.5%;
+}

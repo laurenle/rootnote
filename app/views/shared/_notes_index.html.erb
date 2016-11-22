@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Notes</h1>
+<h2>Notes</h2>
 
 <table>
   <thead>
     <tr>
       <th>Title</th>
-      <th>Body</th>
+      <th>Date modified</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,10 +15,10 @@
     <% @notes.each do |note| %>
       <tr>
         <td><%= note.title %></td>
-        <td><%= note.body %></td>
+        <td><%= note.updated_at.to_formatted_s(:long)  %></td>
         <td><%= link_to 'Show', folder_note_path(note.folder_id, note) %></td>
         <td><%= link_to 'Edit', edit_folder_note_path(note.folder_id, note) %></td>
-        <td><%= link_to 'Destroy', folder_note_path(note.folder_id, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', folder_note_path(note.folder_id, note), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
