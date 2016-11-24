@@ -24,7 +24,17 @@ class NotesController < ApplicationController
   # GET /folders/1/notes/new
   def new
     @folder = Folder.find(params[:folder_id])
-    @note = Note.new
+    @note = Note.new(title: "Untitled", body: "", folder_id: @folder.id)
+
+    respond_to do |format|
+      if @note.save
+        format.html { render :edit }
+        format.json { render :show, status: :created, location: @note }
+      else
+        format.html { redirect_to @folder, notice: 'Error creating note!' }
+        format.json { render json: @note.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # GET /folders/1/notes/1/edit
@@ -34,18 +44,7 @@ class NotesController < ApplicationController
   # POST /folders/1/notes
   # POST /folders/1/notes.json
   def create
-    @folder = Folder.find(params[:folder_id])
-    @note = Note.new(note_params)
-
-    respond_to do |format|
-      if @note.save
-        format.html { redirect_to [@folder, @note], notice: 'Note was successfully created.' }
-        format.json { render :show, status: :created, location: @note }
-      else
-        format.html { render :new }
-        format.json { render json: @note.errors, status: :unprocessable_entity }
-      end
-    end
+    redirect_to action: "new"
   end
 
   # PATCH/PUT /folders/1/notes/1
