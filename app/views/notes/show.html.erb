@@ -5,7 +5,7 @@
 </p>
 
 <p>
-  <%= sanitize @note.body %>
+  <%= sanitize @note.body, tags: %w(i u b ul ol li strong font img h1 h2 h3 h4 h5), attributes: %w(color src size font-style) %>
 </p>
 
 <%= link_to "Edit #{@note.title}", edit_folder_note_path(@folder, @note) %> |
