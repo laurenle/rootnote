@@ -14,13 +14,14 @@
  *= require_self
 */
 
-@import "bootstrap";
-@import "bootstrap/theme";
+body {margin: 0; font: 12pt sans-serif;}
+div {box-sizing: border-box;}
 
-html {
-  font-size: 62.5%;
-}
+header {width: 100%; background: #387a5a; font-size: 11pt; color: #fff;}
+#navigation {display: inline-block;}
+#navigation a, #title {padding: 6pt;}
+#navigation a {display: inline-block; color: #fff; text-decoration: none;}
+#navigation a:hover {background: #fff; color: #387a5a;}
+#title {float: right;}
 
-body {
-  font-size: 1.4rem;
-}
+#content {margin: 6pt;}

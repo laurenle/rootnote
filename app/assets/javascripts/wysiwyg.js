@@ -1,12 +1,110 @@
-// Load saved note into editor
+// Global variables
+var inserttab;
+var showinsert;
+
 $(document).ready(function() {
-  $("#editor").html($("#output").text());
+  /* ---------- Setup ---------- */
+  // Load saved note into editor
+  $("#editor").html($("#note_body").text());
+
+  // Bind selection events
+  $("#editor").mouseup(updateselections);
+  $("#editor").keyup(updateselections);
+
+  // Style color selections (just for fun)
+  $("#fontcolor option").each(function() {
+    $(this).css("background", $(this).val());
+  });
+
+  // Size note container
+  var height = $(window).height() - $("header").height() - $("#controls").height();
+  $("#notecontainer").css("height", height);
+
+  // Place insert menu
+  var top = $("header").height() + $("#controls").height() + 20;
+  var left = $(window).width() / 2 + 40;
+  var maxheight = $("#notecontainer").height() - 40;
+  $("#insertmenu").css({"top": top, "left": left, "max-height": maxheight});
+
+  // Toggle insert menu
+  showinsert = 0;
+  $("#insert").click(function() {
+    if (showinsert === 0) {
+      showinsert = 1;
+      $("#insertmenu").css("display", "block");
+      $("#insert").text("Hide insert menu");
+    } else {
+      showinsert = 0;
+      $("#insertmenu").css("display", "none");
+      $("#insert").text("Show insert menu");
+    }
+  });
+
+  // Insert menu tab switching
+  changetab("image");
+  $("#imagetab").click(function() {
+    changetab("image");
+  });
+  $("#phonetab").click(function() {
+    changetab("phone");
+  });
+  $("#pdftab").click(function() {
+    changetab("pdf");
+  });
+
+  /* ---------- WYSIWYG functions ---------- */
+  // Font size
+  $("#fontsize").change(function() {
+    document.execCommand("fontSize", false, parseInt($("#fontsize").val()));
+  });
+
+  // Font color
+  $("#fontcolor").change(function() {
+    document.execCommand("foreColor", false, $("#fontcolor").val());
+  });
+
+
+  // Bold
+  $("#bold").click(function() {
+    document.execCommand("bold", false, null);
+  });
+
+  // Italic
+  $("#italic").click(function() {
+    document.execCommand("italic", false, null);
+  });
+
+  // Underline
+  $("#underline").click(function() {
+    document.execCommand("underline", false, null);
+  });
+
+  // Bulleted list
+  $("#bulletedlist").click(function() {
+    document.execCommand("insertUnorderedList", false, null);
+  });
+
+  // Numbered list
+  $("#numberedlist").click(function() {
+    document.execCommand("insertOrderedList", false, null);
+  });
+
+  // Clear formatting
+  $("#clearformat").click(function() {
+    document.execCommand("removeFormat", false, null);
+  });
+
+  // Submit
+  $("#save").click(function() {
+    $("#note_body").text($("#editor").html());
+    if ($("form.edit_note")) console.log("Found form");
+    $("form.edit_note").submit();
+  });
 });
 
 // Update font values to where the cursor is
 function updateselections() {
   // Get font elements defining color and size for start and end of selection
-  // TODO: Figure out how to check children too..
   var selection1 = window.getSelection().anchorNode;
   var selection2 = window.getSelection().focusNode;
   var selection1color = selection1;
@@ -36,69 +134,12 @@ function updateselections() {
   $("#fontsize").val(size);
   $("#fontcolor").val(color);
 }
-$("#editor").mouseup(updateselections);
-$("#editor").keyup(updateselections);
 
-// Font size
-function fontsize() {
-  document.execCommand("fontSize", false, parseInt($("#fontsize").val()));
-}
-
-// Font color
-function fontcolor() {
-  document.execCommand("foreColor", false, $("#fontcolor").val());
-}
-
-// Bold
-function b() {
-  document.execCommand("bold", false, null);
-}
-
-// Italic
-function i() {
-  document.execCommand("italic", false, null);
-}
-
-// Underline
-function u() {
-  document.execCommand("underline", false, null);
-}
-
-// Bulleted list
-function bullet() {
-  document.execCommand("insertUnorderedList", false, null);
-}
-
-// Numbered list
-function numbered() {
-  document.execCommand("insertOrderedList", false, null);
-}
-
-// Table
-function table() {
-  // TODO
-}
-
-// Image
-function image() {
-  var url = $("#imgurl").val();
-  if (url) {
-    document.execCommand("insertHTML", false, '<img src="' + url + '" />');
-  }
-}
-
-// Clear formatting
-function clearformat() {
-  document.execCommand("removeFormat", false, null);
-}
-
-// Refresh output
-function refreshoutput() {
-  $("#output").text($("#editor").html());
-}
-
-// Submit
-function submit() {
-  refreshoutput();
-  $("form.edit_note").submit();
+// Change insert tab
+function changetab(newtab) {
+  $("#insert" + inserttab).css("display", "none");
+  $("#" + inserttab + "tab").removeClass("selected");
+  inserttab = newtab;
+  $("#insert" + inserttab).css("display", "block");
+  $("#" + inserttab + "tab").addClass("selected");
 }

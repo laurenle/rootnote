@@ -1,0 +1,15 @@
+<header>
+	<nav id="navigation">
+	  <a href="/">Home</a>
+	  <% if logged_in? -%>
+	    <a href="/folders">Folders</a>
+	    <a href="/notes">All notes</a>
+	    <%= link_to current_user.name, current_user %>
+	    <%= link_to 'Log out', '/logout', method: :delete %>
+	  <% else -%>
+	  	<%= link_to 'Log in', '/login' %>
+	  	<%= link_to 'Sign up', '/users/new', method: :get %>
+	  <% end -%>
+	</nav>
+	<span id="title">Rootnote 2017</span>
+</header>

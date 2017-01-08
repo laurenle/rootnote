@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RootNote</title>
+    <title>Rootnote</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,9 +9,10 @@
   </head>
 
   <body>
-  
-    <%= render 'layouts/nav' %>
+    <%= render 'layouts/header' %>
 
-    <%= yield %>
+    <div id="content">
+      <%= yield %>
+    </div>
   </body>
 </html>
