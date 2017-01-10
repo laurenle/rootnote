@@ -5,13 +5,13 @@ class FoldersController < ApplicationController
   # GET /folders.json
   def index
     @user = current_user
-    @folders = @user.folders
+    @folders = @user.folders.order(updated_at: :desc)
   end
 
   # GET /folders/1
   # GET /folders/1.json
   def show
-    @notes = @folder.notes
+    @notes = @folder.notes.order(:created_at)
   end
 
   # GET /folders/new

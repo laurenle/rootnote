@@ -3,9 +3,9 @@ html, body {overflow: hidden;}
 
 #note_body {display: none;}
 
-#controls {width: 100%; background: #ddd;}
-#controls button, #controls select {padding: 6pt; border: none; background: transparent;}
-#controls button:hover, #controls select:hover {background: #ccc;}
+#controls {width: 100%; background: #ddd; font-size: 10pt;}
+#controls button, #controls select, #controls a {display: inline-block; padding: 6pt; border: none; background: none; font-size: 10pt; color: #000; text-decoration: none;}
+#controls button:hover, #controls select:hover, #controls a:hover {background: #ccc;}
 #controls button:active {background: #bbb;}
 select#fontcolor option {color: #fff;}
 select#fontcolor option:first-child {color: #000;}
@@ -15,10 +15,11 @@ button#underline {text-decoration: underline;}
 button#save {float: right; background: #53a07b; color: #fff;}
 button#save:hover {background: #fff; color: #53a07b;}
 button#save:active {background: #53a07b; color: #fff;}
+#notice {padding: 6pt; float: right;}
 
-#notecontainer {width: 100%; padding: 6pt; overflow: auto;}
+#notecontainer {width: 100%; padding: 15pt; overflow: auto;}
 #note {width: 50%;}
-#note_title {width: 100%; border: none; font-size: 22pt;}
+#note_title {width: 100%; border: none; font-size: 22pt; font-weight: normal; margin: 0;}
 #editor {width: 100%; min-height: 200pt;}
 
 #insertmenu {position: fixed; width: 40%; display: none;}

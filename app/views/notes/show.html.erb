@@ -1,13 +1,15 @@
-<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag "wysiwyg" %>
 
-<p>
-  <h2><%= @note.title %></h2>
-</p>
+<div id="controls">
+	<%= link_to "Back to #{@folder.name}", folder_path(@folder) %>
+	<%= link_to "Edit", edit_folder_note_path(@folder, @note) %>
+	<span id="notice"><%= notice %></div>
+</div>
 
-<p>
-  <%= sanitize @note.body, tags: %w(i u b ul ol li strong font img h1 h2 h3 h4 h5), attributes: %w(color src size font-style) %>
-</p>
-
-<%= link_to "Edit #{@note.title}", edit_folder_note_path(@folder, @note) %> |
-<%= link_to "See all from #{@folder.name}", folder_path(@folder) %> | 
-<%= link_to "All notes", notes_path %>
+<div id="notecontainer">
+	<div id="note">
+		<h1 id="note_title"><%= @note.title %></h1>
+		<hr>
+		<%= sanitize @note.body, tags: %w(i u b ul ol li strong font img h1 h2 h3 h4 h5), attributes: %w(color src size font-style) %>
+	</div>
+</div>

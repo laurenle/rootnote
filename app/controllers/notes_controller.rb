@@ -14,6 +14,7 @@ class NotesController < ApplicationController
     current_user.folders.each do |f|
       @notes.concat(f.notes)
     end
+    @notes = @notes.sort_by(&:created_at)
   end
 
   # GET /folders/1/notes/1

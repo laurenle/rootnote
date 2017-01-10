@@ -1,12 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <h1>
-    <%= @folder.name %>
-  </h1>
-</p>
+<h1><%= @folder.name %></h1>
+<%= link_to 'Rename', edit_folder_path(@folder) %>
 
 <%= render "shared/notes_index", folder: @folder %>
-
-<%= link_to 'Edit', edit_folder_path(@folder) %> |
-<%= link_to 'All folders', folders_path %>
