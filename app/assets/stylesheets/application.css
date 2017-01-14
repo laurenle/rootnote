@@ -49,5 +49,5 @@ a:hover {background: #387a5a;}
 form .field {margin: 0 0 6pt 0;}
 form label {display: inline-block; width: 70pt; text-align: right;}
 form .actions {margin: 0 0 15pt 0;}
-form .actions input {font-size: 11pt; padding: 6pt; background: #ddd; border: none;}
-form .actions input:hover {background: #ccc;}
+form .actions input, button {font-size: 11pt; padding: 6pt; background: #bbb; border: none;}
+form .actions input:hover, button:hover {background: #aaa;}

@@ -22,6 +22,9 @@ button#save:active {background: #53a07b; color: #fff;}
 #note_title {width: 100%; border: none; font-size: 22pt; font-weight: normal; margin: 0;}
 #editor {width: 100%; min-height: 200pt;}
 
+.resizable {display: inline-block; position: relative;}
+#resizer {width: 20pt; height: 20pt; background: #ccc; cursor: nwse-resize;}
+
 #insertmenu {position: fixed; width: 40%; display: none;}
 #inserttabs button {padding: 6pt; border: none; background: #ccc;}
 #inserttabs button:hover {background: #ddd; cursor: pointer;}
