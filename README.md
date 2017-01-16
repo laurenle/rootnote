@@ -1,24 +1,15 @@
-# README
+# Root Note
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
 
-Things you may want to cover:
+After cloning master, please take the following steps to migrate the database. This will only need to be done once:
 
-* Ruby version
+```
+$ bundle install
+$ rake db:setup
+$ rake db:migrate
+```
 
-* System dependencies
+## Troubleshooting
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- If you migrate to Postgres and get an error that the current user does not exist, try clearing your browser cookies and reloading Root Note.
