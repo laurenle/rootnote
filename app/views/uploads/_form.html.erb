@@ -1,0 +1,11 @@
+<%= form_for(@upload, multipart: true) do |f| %>
+ <div class="field">
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+    <%= f.hidden_field :user_id, value: @user.id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

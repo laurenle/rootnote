@@ -6,4 +6,8 @@ class Upload < ApplicationRecord
     square: '200x200#',
     medium: '300x300>'
   }
+
+  # validate the file has an image extension
+  validates_attachment_content_type :file, :content_type => /\Aimage\/.*\Z/
+
 end

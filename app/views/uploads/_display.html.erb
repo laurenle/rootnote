@@ -1,0 +1,7 @@
+<% if @user.uploads.empty? %>
+  <b>No uploads yet!</b>
+<% else %>
+  <% for upload in @user.uploads.each %>
+    <%= image_tag upload.file.url(:square) %>
+  <% end %>
+<% end %>
