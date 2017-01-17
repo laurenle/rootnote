@@ -25,7 +25,7 @@ header {width: 100%; background: #387a5a; font-size: 11pt; color: #fff;}
 #navigation a:hover {background: #fff; color: #387a5a;}
 #title {float: right;}
 
-#content {margin: 15pt;}
+#content {margin: 50px 60px;}
 
 #notice {color: #387a5a;}
 h1 {margin: 0 0 5pt 0; font-weight: normal; font-size: 20pt;}
