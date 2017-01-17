@@ -6,6 +6,15 @@ class User < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   validate :valid_email?
 
+  has_attached_file :avatar, styles: {
+    thumb: '100x100>',
+    square: '200x200#',
+    medium: '300x300>'
+  }
+
+  # validate the avatar has an image extension
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
   def password
     @password ||= Password.new(password_hash)
   end
