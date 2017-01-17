@@ -2,6 +2,9 @@
   <b>No uploads yet!</b>
 <% else %>
   <% for upload in @user.uploads.each %>
-    <%= image_tag upload.file.url(:square) %>
+    <table>
+      <tr><td><%= image_tag upload.file.url(:thumb) %></td></tr>
+      <tr><td>x Delete</td></tr>
+    </table>
   <% end %>
 <% end %>

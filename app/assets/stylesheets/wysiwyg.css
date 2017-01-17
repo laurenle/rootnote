@@ -30,4 +30,4 @@ button#save:active {background: #53a07b; color: #fff;}
 #inserttabs button:hover {background: #ddd; cursor: pointer;}
 #inserttabs button.selected {background: #ddd;}
 #insertpages {position: relative;}
-.insertpage {position: absolute; left: 0; top: 0; display: none; width: 100%; background: #ddd; padding: 6pt;}
+.insertpage {position: absolute; left: 0; top: 0; display: none; width: 100%; overflow-y: scroll; max-height: 500px; background: #ddd; padding: 6pt;}
