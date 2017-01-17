@@ -48,19 +48,12 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    delete_attachments
     @user.destroy
     reset_session
     redirect_to users_url, notice: 'User was successfully destroyed.'
   end
 
   private
-    # delete all user attachments
-    def delete_attachments
-      @user.avatar = nil
-      @user.save
-    end
-
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
