@@ -2,6 +2,8 @@
 
 ## Setup
 
+### Migrate the database
+
 After cloning master, please take the following steps to migrate the database. This will only need to be done once:
 
 ```
@@ -24,6 +26,23 @@ You should have received an email with the information needed to obtain your acc
 ### Reload the ~/.bashrc file:
 ```
 $ source ~/.bashrc
+```
+
+### Install Imagemagick
+
+First, check whether imagemagick already exists on your machine:
+```
+$ identify -version
+Version: ImageMagick 7.0.4-4 Q16 x86_64 2017-01-14 http://www.imagemagick.org
+Copyright: © 1999-2017 ImageMagick Studio LLC
+License: http://www.imagemagick.org/script/license.php
+Features: Cipher DPC HDRI Modules 
+Delegates (built-in): bzlib freetype jng jpeg ltdl lzma png tiff xml zlib
+```
+
+If you do not get the above message, you can install Imagemagick using Homebrew (OSX):
+```
+$ brew install imagemagick
 ```
 
 ## Troubleshooting

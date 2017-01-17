@@ -27,6 +27,9 @@ Rails.application.configure do
   end
 
   # Paperclip and S3 for static content uploads
+  Paperclip.options[:image_magick_path] = "/opt/ImageMagick/bin"
+  Paperclip.options[:command_path] = "/opt/ImageMagick/bin"
+
   config.paperclip_defaults = {
     storage: :s3,
     s3_credentials: {
