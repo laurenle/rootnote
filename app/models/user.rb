@@ -4,7 +4,17 @@ class User < ActiveRecord::Base
   validates :name, :email, :password_hash, presence: true
   validates :email, uniqueness: true
   has_many :folders, dependent: :destroy
+  has_many :uploads, dependent: :destroy
   validate :valid_email?
+
+  has_attached_file :avatar, styles: {
+    thumb: '100x100>',
+    square: '200x200#',
+    medium: '300x300>'
+  }
+
+  # validate the avatar has an image extension
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def password
     @password ||= Password.new(password_hash)

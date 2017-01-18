@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div id="content">
+      <h3>Upload image</h3>
+      <%= render 'uploads/form' %>
+      <%= render 'uploads/display' %>
+    </div>
+  </body>
+</html>
