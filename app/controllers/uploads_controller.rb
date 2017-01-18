@@ -1,5 +1,5 @@
 class UploadsController < ApplicationController
-  # CRUD actions omitted
+  before_action :set_upload, only: [:show, :destroy]
 
   def index
     @user = current_user
@@ -17,7 +17,21 @@ class UploadsController < ApplicationController
     end
   end
 
+  def destroy
+    @upload.destroy
+    respond_to do |format|
+      format.html { redirect_to uploads_url, notice: 'File was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def show
+  end
+
   private
+  def set_upload
+    @upload = Upload.find(params[:id])
+  end
 
   def upload_params
     params.require(:upload).permit(:file, :user_id)
