@@ -48,6 +48,8 @@
 		</div>
 		<div id="insertpages">
 			<div class="insertpage" id="insertimage">
+				<%= link_to "Manage Uploads", uploads_path, remote: true, id: 'manage-uploads' %>
+	      <%= render 'uploads/display' %>
 			</div>
 			<div class="insertpage" id="insertphone">
 				Insert from phone form here
@@ -61,30 +63,9 @@
 
 <script> 
 $(function() {
- 	// Handler for .ready() called.
 
- 	function loadUploadForm() {
-		$("#insertimage").load("/uploads", function(responseText, textStatus, XMLHttpRequest){
-			bindUploadForm();
-	  });
-  }
-
-  function bindUploadForm() {
-  		$("#upload-form").submit(function(e) { 
-			e.preventDefault();
-		  var url = "/uploads";
-	    $.ajax({
-	    	type: "POST",
-	    	url: url,
-	    	data: $("#upload-form").serialize(),
-	    	success: function(response) {
-	    		$("#error_explanation").html(jQuery(response).find('#error_explanation').html());
-	    		$("#display-uploads").html(jQuery(response).find('#display-uploads').html());
-	    	}
-	  	});
-    });
-  }
-
-  loadUploadForm();
+	$("#manage-uploads").click(function(e) {
+	  window.open('/uploads', 'Manage Uploads', 'height=500,width=600');
+	});
 });
 </script>

@@ -4,7 +4,7 @@ class UploadsController < ApplicationController
   def index
     @user = current_user
     @upload = Upload.new
-    render :partial => 'uploads/index'
+    render partial: 'uploads/index'
   end
 
   def create
