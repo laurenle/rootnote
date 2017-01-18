@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   get 'sessions/destroy'
 
-  resources :users
+  resources :users, except: [:index]
+  resources :uploads, only: [:index, :create, :destroy, :show]
+
   resources :folders do
     resources :notes
   end
