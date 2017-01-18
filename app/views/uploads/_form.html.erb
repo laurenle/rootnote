@@ -1,5 +1,17 @@
 <%= form_for(@upload, multipart: true, html: {id: 'upload-form'}, url: uploads_path) do |f| %>
- <div class="field">
+  <% if @upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this file from being uploaded:</h2>
+
+      <ul>
+      <% @upload.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
     <%= f.label :file %>
     <%= f.file_field :file %>
     <%= f.hidden_field :user_id, value: @user.id %>

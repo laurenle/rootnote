@@ -62,7 +62,7 @@
 <script>
 	$("#insertimage").load("/uploads");
 
-	$('#insertimage form').submit(function() {  
+	$('#insertimage').submit(function() {  
 	    var valuesToSubmit = $(this).serialize();
 	    $.ajax({
 	        type: "POST",
