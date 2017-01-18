@@ -1,6 +1,6 @@
-<%= form_for @upload, multipart: true, html: {id: 'upload-form'} do |f| %>
+<%= form_for @upload, multipart: true, remote: true, html: {id: 'upload-form', name: 'upload-form'}, data: {type: 'script'} do |f| %>
+  <div id="error_explanation">
   <% if @upload.errors.any? %>
-    <div id="error_explanation">
       <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this file from being uploaded:</h2>
 
       <ul>
@@ -10,6 +10,7 @@
       </ul>
     </div>
   <% end %>
+  </div>
 
   <div class="field">
     <%= f.label :file %>
