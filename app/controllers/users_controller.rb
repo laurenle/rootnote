@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, :verify_user, only: [:show, :edit, :update, :destroy]
   skip_before_filter :require_login, only: [:new, :create]
 
   # GET /users
@@ -57,6 +57,12 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def verify_user
+      if session[:user_id] != params[:id].to_i
+        redirect_to User.find(session[:user_id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
