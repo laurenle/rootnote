@@ -62,16 +62,18 @@
 <script>
 	$("#insertimage").load("/uploads");
 
-	$('#insertimage').submit(function() {  
-	    var valuesToSubmit = $(this).serialize();
-	    $.ajax({
-	        type: "POST",
-	        url: $(this).attr('action'), //sumbits it to the given url of the form
-	        data: valuesToSubmit,
-	        dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-	    }).success(function(json){
-	        console.log("success", json);
-	    });
-	    return false; // prevents normal behaviour
-	});
+	$('#upload-form').submit(function(e) {  
+	  console.log("In the right method");
+	  var url = "/uploads";
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#upload-form").serialize(),
+           success: function(data)
+           {
+               alert(data);
+           }
+         });
+    e.preventDefault();
+  });
 </script>

@@ -7,7 +7,7 @@
   <tr>
   <% for upload in @user.uploads.each %>
       <td><%= image_tag upload.file.url(:thumb) %></td>
-      <td><%= link_to 'Delete', upload, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'x', upload, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <% if (i % 3) == 0 %>
       </tr><tr>
     <% end %>

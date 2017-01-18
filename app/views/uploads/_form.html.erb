@@ -1,4 +1,4 @@
-<%= form_for(@upload, multipart: true, html: {id: 'upload-form'}, url: uploads_path) do |f| %>
+<%= form_for @upload, multipart: true, html: {id: 'upload-form'} do |f| %>
   <% if @upload.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this file from being uploaded:</h2>
