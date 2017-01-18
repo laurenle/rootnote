@@ -79,6 +79,7 @@ $(function() {
 	    	data: $("#upload-form").serialize(),
 	    	success: function(response) {
 	    		$("#error_explanation").html(jQuery(response).find('#error_explanation').html());
+	    		$("#display-uploads").html(jQuery(response).find('#display-uploads').html());
 	    	}
 	  	});
     });

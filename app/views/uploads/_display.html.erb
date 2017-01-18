@@ -2,7 +2,7 @@
 <% if @user.uploads.empty? %>
   <b>No uploads yet!</b>
 <% else %>
-  <table>
+  <table id="display-uploads">
   <% i = 1 %>
   <tr>
   <% for upload in @user.uploads.each %>
