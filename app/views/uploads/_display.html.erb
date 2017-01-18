@@ -1,10 +1,17 @@
+<!--Displays Upload elements in a nice 3 column grid-->
 <% if @user.uploads.empty? %>
   <b>No uploads yet!</b>
 <% else %>
+  <table>
+  <% i = 1 %>
+  <tr>
   <% for upload in @user.uploads.each %>
-    <table>
-      <tr><td><%= image_tag upload.file.url(:thumb) %></td></tr>
-      <tr><td>x Delete</td></tr>
-    </table>
+      <td><%= image_tag upload.file.url(:thumb) %></td><td>x</td>
+    <% if (i % 3) == 0 %>
+      </tr><tr>
+    <% end %>
+    <% i += 1 %>
   <% end %>
+  </tr>
+  </table>
 <% end %>
