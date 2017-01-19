@@ -48,8 +48,8 @@
 		</div>
 		<div id="insertpages">
 			<div class="insertpage" id="insertimage">
-				<input type="text" id="imageurl" placeholder="Image URL">
-				<button type="button" id="image">Insert image</button>
+				<%= link_to "Manage Uploads", uploads_path, remote: true, id: 'manage-uploads' %>
+	      <%= render 'uploads/display' %>
 			</div>
 			<div class="insertpage" id="insertphone">
 				Insert from phone form here
@@ -60,3 +60,12 @@
 		</div>
 	</div>
 <% end %>
+
+<script> 
+$(function() {
+
+	$("#manage-uploads").click(function(e) {
+	  window.open('/uploads', 'Manage Uploads', 'height=500,width=600');
+	});
+});
+</script>
