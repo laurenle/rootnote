@@ -2,6 +2,13 @@
 
 ## Setup
 
+### Setup Postgres
+
+Install postgres:
+http://postgresapp.com/
+
+Open the Postgres.app file to start the GUI. If the database is not running, click the "Start" button.
+
 ### Migrate the database
 
 After cloning master, please take the following steps to migrate the database. This will only need to be done once:
