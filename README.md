@@ -4,10 +4,15 @@
 
 ### Setup Postgres
 
-Install postgres:
+Install postgres (OSX):
 http://postgresapp.com/
 
 Open the Postgres.app file to start the GUI. If the database is not running, click the "Start" button.
+
+Install postgres (Windows):
+https://www.postgresql.org/download/windows/
+
+Use the graphical installer. Choose a username and password during installation and remember them.
 
 ### Migrate the database
 
@@ -52,6 +57,16 @@ If you do not get the above message, you can install Imagemagick using Homebrew 
 $ brew install imagemagick
 ```
 
+To install Imagemagick on Windows, you can use the Windows binary installer on imagemagick.org. You must check the option "Install legacy utilities" to make available the commands used by Paperclip, and ensure that the Imagemagick directory is added to your system path (the installer should do this for you).
+
+### Install DevKit (Windows only)
+
+On Windows, you must install the Ruby DevKit to make available some system commands used by Paperclip:
+http://rubyinstaller.org/downloads/
+
+After downloading, add the bin directory to your system path.
+
 ## Troubleshooting
 
 - If you migrate to Postgres and get an error that the current user does not exist, try clearing your browser cookies and reloading Root Note.
+- If you get errors when trying to upload images about SSL certificates, download this certificate bundle: https://curl.haxx.se/ca/cacert.pem, and add the environment variable SSL_CERT_FILE pointing to where you saved it. This should allow your computer to communicate with AWS.
