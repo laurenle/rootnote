@@ -8,6 +8,7 @@ Install postgres (OSX):
 http://postgresapp.com/
 
 Open the Postgres.app file to start the GUI. If the database is not running, click the "Start" button.
+Remember your username and password, since you'll need to enter them as environment variables soon.
 
 Install postgres (Windows):
 https://www.postgresql.org/download/windows/
@@ -32,6 +33,9 @@ export S3_BUCKET_NAME=your_bucket_name
 export AWS_ACCESS_KEY_ID=your_access_key_id
 export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 export AWS_REGION=us-east-1
+
+export POSTGRES_USER=your_postgres_username
+export POSTGRES_PASSWORD=your_postgres_password
 ```
 You should have received an email with the information needed to obtain your access keys. Because this is a public Github repository, **do not accidentally upload any information on your access keys.** If you are unsure about any of this information, contact Lauren.
 
