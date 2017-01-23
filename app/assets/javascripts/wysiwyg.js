@@ -52,6 +52,9 @@ $(document).ready(function() {
     changetab("pdf");
   });
 
+  // Bind AJAX upload handler
+  $("#upload-form").on("ajax:aborted:file", ajaxupload);
+
   /* ---------- WYSIWYG functions ---------- */
   // Font size
   $("#fontsize").change(function() {
@@ -217,4 +220,20 @@ function changetab(newtab) {
   inserttab = newtab;
   $("#insert" + inserttab).css("display", "block");
   $("#" + inserttab + "tab").addClass("selected");
+}
+
+// AJAX upload submission
+// For some reason rails refuses to do this for us
+function ajaxupload() {
+  var formdata = new FormData($("#upload-form").get(0));
+  $.ajax({
+    url: "/uploads",
+    type: "POST",
+    data: formdata,
+    dataType: "script",
+    contentType: false,
+    processData: false
+  });
+
+  return false;  // Override regular submission
 }
