@@ -1,71 +1,61 @@
-<%= form_for([@folder, @note]) do |f| %>
-	<div id="controls">
-		<select id ="fontsize">
-			<option value="-">-</option>
-			<option value="1">10 pt</option>
-			<option value="2">12 pt</option>
-			<option value="3">14 pt</option>
-			<option value="4">16 pt</option>
-			<option value="5">18 pt</option>
-			<option value="6">20 pt</option>
-			<option value="7">22 pt</option>
-		</select>
-		<select id="fontcolor">
-			<option value="-">-</option>
-			<option value="rgb(0,0,0)">Black</option>
-			<option value="rgb(255,0,0)">Red</option>
-			<option value="rgb(255,127,0)">Orange</option>
-			<option value="rgb(255,255,0)">Yellow</option>
-			<option value="rgb(0,255,0)">Green</option>
-			<option value="rgb(0,0,255)">Blue</option>
-			<option value="rgb(127,0,255)">Purple</option>
-			<option value="rgb(255,0,127)">Pink</option>
-		</select>
-		<button type="button" id="bold">B</button>
-		<button type="button" id="italic">I</button>
-		<button type="button" id="underline">U</button> |
-		<button type="button" id="bulletedlist">Bulleted list</button>
-		<button type="button" id="numberedlist">Numbered list</button> |
-		<button type="button" id="clearformat">Clear formatting</button> |
-		<button type="button" id="insert">Show insert menu</button>
-		<button type="button" id="save">Save changes</button>
-	</div>
+<div id="controls">
+	<select id ="fontsize">
+		<option value="-">-</option>
+		<option value="1">10 pt</option>
+		<option value="2">12 pt</option>
+		<option value="3">14 pt</option>
+		<option value="4">16 pt</option>
+		<option value="5">18 pt</option>
+		<option value="6">20 pt</option>
+		<option value="7">22 pt</option>
+	</select>
+	<select id="fontcolor">
+		<option value="-">-</option>
+		<option value="rgb(0,0,0)">Black</option>
+		<option value="rgb(255,0,0)">Red</option>
+		<option value="rgb(255,127,0)">Orange</option>
+		<option value="rgb(255,255,0)">Yellow</option>
+		<option value="rgb(0,255,0)">Green</option>
+		<option value="rgb(0,0,255)">Blue</option>
+		<option value="rgb(127,0,255)">Purple</option>
+		<option value="rgb(255,0,127)">Pink</option>
+	</select>
+	<button type="button" id="bold">B</button>
+	<button type="button" id="italic">I</button>
+	<button type="button" id="underline">U</button> |
+	<button type="button" id="bulletedlist">Bulleted list</button>
+	<button type="button" id="numberedlist">Numbered list</button> |
+	<button type="button" id="clearformat">Clear formatting</button> |
+	<button type="button" id="insert">Show insert menu</button>
+	<button type="button" id="save">Save changes</button>
+</div>
 
-	<div id="notecontainer">
-		<div id="note">
+<div id="notecontainer">
+	<div id="note">
+		<%= form_for([@folder, @note]) do |f| %>
 			<%= f.text_field :title %>
 			<%= f.text_area :body %>
-			<hr>
-			<div id="editor" contentEditable="true"></div>
+		<% end %>
+		<hr>
+		<div id="editor" contentEditable="true"></div>
+	</div>
+</div>
+
+<div id="insertmenu">
+	<div id="inserttabs">
+		<button type="button" id="imagetab">Image</button>
+		<button type="button" id="phonetab">From phone</button>
+		<button type="button" id="pdftab">PDF</button>
+	</div>
+	<div id="insertpages">
+		<div class="insertpage" id="insertimage">
+      		<%= render 'uploads/index' %>
+		</div>
+		<div class="insertpage" id="insertphone">
+			Insert from phone form here
+		</div>
+		<div class="insertpage" id="insertpdf">
+			Insert PDF form here
 		</div>
 	</div>
-
-	<div id="insertmenu">
-		<div id="inserttabs">
-			<button type="button" id="imagetab">Image</button>
-			<button type="button" id="phonetab">From phone</button>
-			<button type="button" id="pdftab">PDF</button>
-		</div>
-		<div id="insertpages">
-			<div class="insertpage" id="insertimage">
-				<%= link_to "Manage Uploads", uploads_path, remote: true, id: 'manage-uploads' %>
-	      <%= render 'uploads/display' %>
-			</div>
-			<div class="insertpage" id="insertphone">
-				Insert from phone form here
-			</div>
-			<div class="insertpage" id="insertpdf">
-				Insert PDF form here
-			</div>
-		</div>
-	</div>
-<% end %>
-
-<script> 
-$(function() {
-
-	$("#manage-uploads").click(function(e) {
-	  window.open('/uploads', 'Manage Uploads', 'height=500,width=600');
-	});
-});
-</script>
+</div>

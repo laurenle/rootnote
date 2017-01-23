@@ -9,19 +9,25 @@ class UploadsController < ApplicationController
 
   def create
     @upload = Upload.new(upload_params)
+    @upload.save
 
-    if @upload.save
-      render :partial => 'uploads/index', notice: 'File was successfully uploaded.'
-    else
-      render :partial => 'uploads/index', notice: 'There was an error while uploading your context.'
+    respond_to do |format|
+      format.html { head :no_content }
     end
+
+    #if @upload.save
+    #  render :partial => 'uploads/index', notice: 'File was successfully uploaded.'
+    #else
+    #  render :partial => 'uploads/index', notice: 'There was an error while uploading your context.'
+    #end
   end
 
   def destroy
     @upload.destroy
     respond_to do |format|
-      format.html { redirect_to uploads_url, notice: 'File was successfully destroyed.' }
-      format.json { head :no_content }
+      #format.html { render :partial => 'uploads/index', notice: 'File was successfully destroyed.' }
+      format.html { head :no_content }
+      format.js #execute destroy.js.erb
     end
   end
 
