@@ -6,7 +6,7 @@
   <% i = 1 %>
   <tr>
   <% for upload in @uploads.each %>
-      <td><%= image_tag upload.file.url(:thumb), data: { address: upload.file.url(:medium) } %></td>
+      <td><%= image_tag upload.file.url(:thumb), data: { address: upload.file.url(:medium) }, class: "insertable" %></td>
       <td><%= link_to 'x', upload, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %></td>
     <% if (i % 3) == 0 %>
       </tr><tr>

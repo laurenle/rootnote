@@ -1,5 +1,8 @@
 // Global variables
 var inserttab;
+var hovering;
+var resizing;
+var starty, startx, startw, starth;
 
 $(document).ready(function() {
   /* ---------- Setup ---------- */
@@ -97,8 +100,10 @@ $(document).ready(function() {
     document.execCommand("removeFormat", false, null);
   });
 
-  $("#image").click(function() {
-    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + $("#imageurl").val() + '" />');
+  // Image
+  $(".insertable").click(function() {
+    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + $(this).data("address") + '" />');
+    $(".resizable").hover(resizableenter, resizableleave);
   });
 
   // Submit
@@ -108,40 +113,9 @@ $(document).ready(function() {
   });
 
   // Image resizing ----------
-  var hovering = 0;
-  var resizing = null;
-  var starty, startx, startw, starth;
-  $(".resizable").hover(function() {
-    hovering = 1;
-    var resizable = $(this);
-    if ($("#resizer").length === 0) {
-      // Place resizer
-      $("body").append('<div id="resizer" style="position: absolute; display: none;"></div>');
-      positionresizer($(this));
-
-      // Bind mouseleave event
-      $("#resizer").mouseleave(function() {
-        window.setTimeout(function() {
-          if (hovering === 0 && !resizing) $("#resizer").remove();
-        }, 200);
-      });
-
-      // Bind mousedown event
-      $("#resizer").mousedown(function() {
-        resizing = resizable;
-        starty = event.pageY;
-        startx = event.pageX;
-        startw = resizable.width();
-        starth = resizable.height();
-      });
-    }
-  }, function() {
-     hovering = 0;
-     // Remove resizer
-     window.setTimeout(function() {
-      if ($("#resizer:hover").length === 0 && !resizing) $("#resizer").remove();
-     }, 200);
-  });
+  hovering = false;
+  resizing = null;
+  $(".resizable").hover(resizableenter, resizableleave);
 
   // Make sure resizer is correctly positioned when scrolling
   $("#notecontainer").scroll(function() {
@@ -211,6 +185,42 @@ function updateselections() {
   // Set selections
   $("#fontsize").val(size);
   $("#fontcolor").val(color);
+}
+
+// Hover over resizable
+function resizableenter() {
+  hovering = true;
+  var resizable = $(this);
+  if ($("#resizer").length === 0) {
+    // Place resizer
+    $("body").append('<div id="resizer" style="position: absolute; display: none;"></div>');
+    positionresizer($(this));
+
+    // Bind mouseleave event
+    $("#resizer").mouseleave(function() {
+      window.setTimeout(function() {
+        if (!hovering && !resizing) $("#resizer").remove();
+      }, 200);
+    });
+
+    // Bind mousedown event
+    $("#resizer").mousedown(function() {
+      resizing = resizable;
+      starty = event.pageY;
+      startx = event.pageX;
+      startw = resizable.width();
+      starth = resizable.height();
+    });
+  }
+}
+
+// Stop hovering over resizable
+function resizableleave() {
+   hovering = false;
+   // Remove resizer
+   window.setTimeout(function() {
+    if ($("#resizer:hover").length === 0 && !resizing) $("#resizer").remove();
+   }, 200);
 }
 
 // Change insert tab
