@@ -40,7 +40,7 @@ class NotesController < ApplicationController
 
   # GET /folders/1/notes/1/edit
   def edit
-    @upload = Upload.new
+    
   end
 
   # POST /folders/1/notes

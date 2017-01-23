@@ -1,3 +1,6 @@
+<% @upload = Upload.new
+   @uploads = current_user.uploads.order(created_at: :desc) %>
+
 <h3>Upload image</h3>
 <%= render 'uploads/form' %>
 <%= render 'uploads/display' %>

@@ -3,28 +3,26 @@ class UploadsController < ApplicationController
 
   def index
     @user = current_user
-    @upload = Upload.new
+
     render partial: 'uploads/index'
   end
 
   def create
     @upload = Upload.new(upload_params)
     @upload.save
-    @upload = Upload.new
 
     respond_to do |format|
       format.html { render partial: 'uploads/index' }
-      format.js # Use create.js.erb
+      format.js { render partial: 'uploads/refresh', format: 'js' }
     end
   end
 
   def destroy
     @upload.destroy
-    @upload = Upload.new
 
     respond_to do |format|
       format.html { render partial: 'uploads/index' }
-      format.js # Use destroy.js.erb
+      format.js { render partial: 'uploads/refresh', format: 'js' }
     end
   end
 

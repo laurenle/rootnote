@@ -1,11 +1,11 @@
 <!--Displays Upload elements in a nice 3 column grid-->
-<% if @user.uploads.empty? %>
+<% if @uploads.empty? %>
   <b>No uploads yet!</b>
 <% else %>
   <table id="display-uploads">
   <% i = 1 %>
   <tr>
-  <% for upload in @user.uploads.each %>
+  <% for upload in @uploads.each %>
       <td><%= image_tag upload.file.url(:thumb), data: { address: upload.file.url(:medium) } %></td>
       <td><%= link_to 'x', upload, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %></td>
     <% if (i % 3) == 0 %>
