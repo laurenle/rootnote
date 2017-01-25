@@ -27,7 +27,8 @@ $(document).ready(function() {
   var top = $("header").height() + $("#controls").height() + 20;
   var left = $(window).width() / 2 + 40;
   var maxheight = $("#notecontainer").height() - 40;
-  $("#insertmenu").css({"top": top, "left": left, "max-height": maxheight});
+  $("#insertmenu").css({"top": top, "left": left});
+  $(".insertpage").css("max-height", maxheight);
 
   // Toggle insert menu
   var showinsert = 0;
@@ -55,8 +56,19 @@ $(document).ready(function() {
     changetab("pdf");
   });
 
+  // Delete confirmation
+  $(".delete-upload").submit(confirmdelete);
+
   // Bind AJAX upload handler
   $("#upload-form").on("ajax:aborted:file", ajaxupload);
+
+  // Bind AJAX handlers for loading cover
+  $(".insertpage").on("ajax:before", function() {
+    $(this).append('<div class="loadingcover"></div>');
+  });
+  $(".insertpage").on("ajax:complete", function() {
+    $(this).find(".loadingcover").remove();
+  });
 
   /* ---------- WYSIWYG functions ---------- */
   // Font size
@@ -101,8 +113,9 @@ $(document).ready(function() {
   });
 
   // Image
-  $(".insertable").click(function() {
-    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + $(this).data("address") + '" />');
+  $(".insert").click(function() {
+    var address = $(this).closest(".insertable").data("address");
+    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + address + '" />');
     $(".resizable").hover(resizableenter, resizableleave);
   });
 
@@ -232,9 +245,33 @@ function changetab(newtab) {
   $("#" + inserttab + "tab").addClass("selected");
 }
 
+// Delete upload confirmation
+function confirmdelete() {
+  var form = $(this);
+  var button = $(this).find(".delete");
+
+  if (button.hasClass("confirm")) {
+    form.submit();
+  } else {
+    // Confirm deletion
+    button.val("Sure?");
+    button.addClass("confirm");
+
+    // Revert if they stop hovering
+    $(this).closest(".upload").mouseleave(function() {
+      button.val("Delete");
+      button.removeClass("confirm");
+    });
+  }
+
+  return false;  // Don't submit
+}
+
 // AJAX upload submission
 // For some reason rails refuses to do this for us
 function ajaxupload() {
+  $("#upload-form").trigger("ajax:before");
+
   var formdata = new FormData($("#upload-form").get(0));
   $.ajax({
     url: "/uploads",

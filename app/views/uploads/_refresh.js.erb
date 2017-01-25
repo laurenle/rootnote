@@ -1,2 +1,3 @@
 $("#insertimage").html("<%= escape_javascript(render partial: 'uploads/index') %>");  // Render uploads/index
 $("#upload-form").on("ajax:aborted:file", ajaxupload);                                // Re-bind AJAX handler
+$(".delete-upload").submit(confirmdelete);                                            // Re-bind delete confirmation for any new uploads
