@@ -56,19 +56,16 @@ $(document).ready(function() {
     changetab("pdf");
   });
 
-  // Delete confirmation
-  $(".delete-upload").submit(confirmdelete);
-
-  // Bind AJAX upload handler
-  $("#upload-form").on("ajax:aborted:file", ajaxupload);
-
-  // Bind AJAX handlers for loading cover
+  // Add loading cover while AJAX is happening on any insert menu page
   $(".insertpage").on("ajax:before", function() {
     $(this).append('<div class="loadingcover"></div>');
   });
   $(".insertpage").on("ajax:complete", function() {
     $(this).find(".loadingcover").remove();
   });
+
+  // Bind uploads/index events
+  binduploadsevents();
 
   /* ---------- WYSIWYG functions ---------- */
   // Font size
@@ -112,13 +109,6 @@ $(document).ready(function() {
     document.execCommand("removeFormat", false, null);
   });
 
-  // Image
-  $(".insert").click(function() {
-    var address = $(this).closest(".insertable").data("address");
-    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + address + '" />');
-    $(".resizable").hover(resizableenter, resizableleave);
-  });
-
   // Submit
   $("#save").click(function() {
     $("#note_body").text($("#editor").html());
@@ -158,15 +148,6 @@ $(document).ready(function() {
   });
 });
 
-// Reposition resizer
-function positionresizer(resizable) {
-  if (resizable.length > 0) {
-    var bottom = $(window).height() - resizable.offset().top - resizable.height();
-    var right = $(window).width() - resizable.offset().left - resizable.width();
-    $("#resizer").css({"bottom": bottom, "right": right, "display": "block"});
-  }
-}
-
 // Update font values to where the cursor is
 function updateselections() {
   // Get font elements defining color and size for start and end of selection
@@ -198,6 +179,15 @@ function updateselections() {
   // Set selections
   $("#fontsize").val(size);
   $("#fontcolor").val(color);
+}
+
+// Reposition resizer
+function positionresizer(resizable) {
+  if (resizable.length > 0) {
+    var bottom = $(window).height() - resizable.offset().top - resizable.height();
+    var right = $(window).width() - resizable.offset().left - resizable.width();
+    $("#resizer").css({"bottom": bottom, "right": right, "display": "block"});
+  }
 }
 
 // Hover over resizable
@@ -245,42 +235,53 @@ function changetab(newtab) {
   $("#" + inserttab + "tab").addClass("selected");
 }
 
-// Delete upload confirmation
-function confirmdelete() {
-  var form = $(this);
-  var button = $(this).find(".delete");
+// Function for binding everything inside the uploads/index render
+// Consolidated here because we need to do this on document ready and whenever AJAX updates the render
+function binduploadsevents() {
+  // Delete confirmation
+  $(".delete-upload").submit(function() {
+    var form = $(this);
+    var button = $(this).find(".delete");
 
-  if (button.hasClass("confirm")) {
-    form.submit();
-  } else {
-    // Confirm deletion
-    button.val("Sure?");
-    button.addClass("confirm");
+    if (button.hasClass("confirm")) {
+      form.submit();
+    } else {
+      // Confirm deletion
+      button.val("Sure?");
+      button.addClass("confirm");
 
-    // Revert if they stop hovering
-    $(this).closest(".upload").mouseleave(function() {
-      button.val("Delete");
-      button.removeClass("confirm");
-    });
-  }
+      // Revert if they stop hovering
+      $(this).closest(".upload").mouseleave(function() {
+        button.val("Delete");
+        button.removeClass("confirm");
+      });
+    }
 
-  return false;  // Don't submit
-}
-
-// AJAX upload submission
-// For some reason rails refuses to do this for us
-function ajaxupload() {
-  $("#upload-form").trigger("ajax:before");
-
-  var formdata = new FormData($("#upload-form").get(0));
-  $.ajax({
-    url: "/uploads",
-    type: "POST",
-    data: formdata,
-    dataType: "script",
-    contentType: false,
-    processData: false
+    return false;  // Don't submit
   });
 
-  return false;  // Override regular submission
+  // AJAX upload submission
+  // For some reason rails refuses to do this for us
+  $("#upload-form").on("ajax:aborted:file", function() {
+    $("#upload-form").trigger("ajax:before");
+
+    var formdata = new FormData($("#upload-form").get(0));
+    $.ajax({
+      url: "/uploads",
+      type: "POST",
+      data: formdata,
+      dataType: "script",
+      contentType: false,
+      processData: false
+    });
+
+    return false;  // Override regular submission
+  });
+
+  // Insert image
+  $(".insert").click(function() {
+    var address = $(this).closest(".insertable").data("address");
+    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + address + '" />');
+    $(".resizable").hover(resizableenter, resizableleave);
+  });
 }
