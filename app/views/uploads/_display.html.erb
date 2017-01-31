@@ -1,18 +1,12 @@
-<!--Displays Upload elements in a nice 3 column grid-->
-<% if @user.uploads.empty? %>
+<% if @uploads.empty? %>
   <b>No uploads yet!</b>
 <% else %>
-  <table id="display-uploads">
-  <% i = 1 %>
-  <tr>
-  <% for upload in @user.uploads.each %>
-      <td><%= image_tag upload.file.url(:thumb), data: { address: upload.file.url(:medium) } %></td>
-      <td><%= link_to 'x', upload, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% if (i % 3) == 0 %>
-      </tr><tr>
-    <% end %>
-    <% i += 1 %>
+  <div id="uploadcontainer">
+  <% for upload in @uploads.each %>
+    <div class="insertable upload" data-address="<%= upload.file.url(:medium) %>" style="background-image: url('<%= upload.file.url(:thumb) %>')">
+      <button type="button" class="insert">Insert</button>
+      <%= button_to 'Delete', upload, method: :delete, remote: true, class: "delete", form_class: "delete-upload" %>
+    </div>
   <% end %>
-  </tr>
-  </table>
+  </div>
 <% end %>

@@ -27,7 +27,6 @@ header {width: 100%; background: #387a5a; font-size: 11pt; color: #fff;}
 
 #content {margin: 50px 60px;}
 
-#notice {color: #387a5a;}
 h1 {margin: 0 0 5pt 0; font-weight: normal; font-size: 20pt;}
 
 a {display: inline-block; text-decoration: none; font-size: 11pt; color: #fff; padding: 6pt; background: #53a07b;}
@@ -47,7 +46,7 @@ a:hover {background: #387a5a;}
 .list a:hover {background: #ccc;}
 
 form .field {margin: 0 0 6pt 0;}
-form label {display: inline-block; width: 70pt; text-align: right;}
+form label {display: inline-block; width: 80pt; text-align: right;}
 form .actions {margin: 0 0 15pt 0;}
-form .actions input, button {font-size: 11pt; padding: 6pt; background: #bbb; border: none;}
-form .actions input:hover, button:hover {background: #aaa;}
+input[type="submit"], button {font-size: 11pt; padding: 6pt; background: #bbb; border: none;}
+input[type="submit"]:hover, button:hover {background: #aaa;}

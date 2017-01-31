@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <%= csrf_meta_tags %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<!-- Setting these variables here because this is used in so many places -->
+<% @upload = Upload.new
+   @uploads = current_user.uploads.order(created_at: :desc) %>
 
-  <body>
-    <div id="content">
-      <h3>Upload image</h3>
-      <%= render 'uploads/form' %>
-      <%= render 'uploads/display' %>
-    </div>
-  </body>
-</html>
+<%= render 'uploads/form' %>
+<%= render 'uploads/display' %>

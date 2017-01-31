@@ -1,31 +1,29 @@
 class UploadsController < ApplicationController
-  before_action :set_upload, only: [:show, :destroy]
+  before_action :set_upload, only: [:destroy]
 
   def index
     @user = current_user
-    @upload = Upload.new
+
     render partial: 'uploads/index'
   end
 
   def create
     @upload = Upload.new(upload_params)
+    @upload.save
 
-    if @upload.save
-      render :partial => 'uploads/index', notice: 'File was successfully uploaded.'
-    else
-      render :partial => 'uploads/index', notice: 'There was an error while uploading your context.'
+    respond_to do |format|
+      format.html { render partial: 'uploads/index' }
+      format.js { render partial: 'uploads/refresh', format: 'js' }
     end
   end
 
   def destroy
     @upload.destroy
-    respond_to do |format|
-      format.html { redirect_to uploads_url, notice: 'File was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
-  def show
+    respond_to do |format|
+      format.html { render partial: 'uploads/index' }
+      format.js { render partial: 'uploads/refresh', format: 'js' }
+    end
   end
 
   private

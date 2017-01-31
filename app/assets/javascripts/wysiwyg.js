@@ -1,5 +1,8 @@
 // Global variables
 var inserttab;
+var hovering;
+var resizing;
+var starty, startx, startw, starth;
 
 $(document).ready(function() {
   /* ---------- Setup ---------- */
@@ -24,7 +27,8 @@ $(document).ready(function() {
   var top = $("header").height() + $("#controls").height() + 20;
   var left = $(window).width() / 2 + 40;
   var maxheight = $("#notecontainer").height() - 40;
-  $("#insertmenu").css({"top": top, "left": left, "max-height": maxheight});
+  $("#insertmenu").css({"top": top, "left": left});
+  $(".insertpage").css("max-height", maxheight);
 
   // Toggle insert menu
   var showinsert = 0;
@@ -51,6 +55,17 @@ $(document).ready(function() {
   $("#pdftab").click(function() {
     changetab("pdf");
   });
+
+  // Add loading cover while AJAX is happening on any insert menu page
+  $(".insertpage").on("ajax:before", function() {
+    $(this).append('<div class="loadingcover"></div>');
+  });
+  $(".insertpage").on("ajax:complete", function() {
+    $(this).find(".loadingcover").remove();
+  });
+
+  // Bind uploads/index events
+  binduploadsevents();
 
   /* ---------- WYSIWYG functions ---------- */
   // Font size
@@ -94,10 +109,6 @@ $(document).ready(function() {
     document.execCommand("removeFormat", false, null);
   });
 
-  $("#image").click(function() {
-    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + $("#imageurl").val() + '" />');
-  });
-
   // Submit
   $("#save").click(function() {
     $("#note_body").text($("#editor").html());
@@ -105,40 +116,9 @@ $(document).ready(function() {
   });
 
   // Image resizing ----------
-  var hovering = 0;
-  var resizing = null;
-  var starty, startx, startw, starth;
-  $(".resizable").hover(function() {
-    hovering = 1;
-    var resizable = $(this);
-    if ($("#resizer").length === 0) {
-      // Place resizer
-      $("body").append('<div id="resizer" style="position: absolute; display: none;"></div>');
-      positionresizer($(this));
-
-      // Bind mouseleave event
-      $("#resizer").mouseleave(function() {
-        window.setTimeout(function() {
-          if (hovering === 0 && !resizing) $("#resizer").remove();
-        }, 200);
-      });
-
-      // Bind mousedown event
-      $("#resizer").mousedown(function() {
-        resizing = resizable;
-        starty = event.pageY;
-        startx = event.pageX;
-        startw = resizable.width();
-        starth = resizable.height();
-      });
-    }
-  }, function() {
-     hovering = 0;
-     // Remove resizer
-     window.setTimeout(function() {
-      if ($("#resizer:hover").length === 0 && !resizing) $("#resizer").remove();
-     }, 200);
-  });
+  hovering = false;
+  resizing = null;
+  $(".resizable").hover(resizableenter, resizableleave);
 
   // Make sure resizer is correctly positioned when scrolling
   $("#notecontainer").scroll(function() {
@@ -167,15 +147,6 @@ $(document).ready(function() {
     $("#resizer").remove();
   });
 });
-
-// Reposition resizer
-function positionresizer(resizable) {
-  if (resizable.length > 0) {
-    var bottom = $(window).height() - resizable.offset().top - resizable.height();
-    var right = $(window).width() - resizable.offset().left - resizable.width();
-    $("#resizer").css({"bottom": bottom, "right": right, "display": "block"});
-  }
-}
 
 // Update font values to where the cursor is
 function updateselections() {
@@ -210,6 +181,51 @@ function updateselections() {
   $("#fontcolor").val(color);
 }
 
+// Reposition resizer
+function positionresizer(resizable) {
+  if (resizable.length > 0) {
+    var bottom = $(window).height() - resizable.offset().top - resizable.height();
+    var right = $(window).width() - resizable.offset().left - resizable.width();
+    $("#resizer").css({"bottom": bottom, "right": right, "display": "block"});
+  }
+}
+
+// Hover over resizable
+function resizableenter() {
+  hovering = true;
+  var resizable = $(this);
+  if ($("#resizer").length === 0) {
+    // Place resizer
+    $("body").append('<div id="resizer" style="position: absolute; display: none;"></div>');
+    positionresizer($(this));
+
+    // Bind mouseleave event
+    $("#resizer").mouseleave(function() {
+      window.setTimeout(function() {
+        if (!hovering && !resizing) $("#resizer").remove();
+      }, 200);
+    });
+
+    // Bind mousedown event
+    $("#resizer").mousedown(function() {
+      resizing = resizable;
+      starty = event.pageY;
+      startx = event.pageX;
+      startw = resizable.width();
+      starth = resizable.height();
+    });
+  }
+}
+
+// Stop hovering over resizable
+function resizableleave() {
+   hovering = false;
+   // Remove resizer
+   window.setTimeout(function() {
+    if ($("#resizer:hover").length === 0 && !resizing) $("#resizer").remove();
+   }, 200);
+}
+
 // Change insert tab
 function changetab(newtab) {
   $("#insert" + inserttab).css("display", "none");
@@ -217,4 +233,55 @@ function changetab(newtab) {
   inserttab = newtab;
   $("#insert" + inserttab).css("display", "block");
   $("#" + inserttab + "tab").addClass("selected");
+}
+
+// Function for binding everything inside the uploads/index render
+// Consolidated here because we need to do this on document ready and whenever AJAX updates the render
+function binduploadsevents() {
+  // Delete confirmation
+  $(".delete-upload").submit(function() {
+    var form = $(this);
+    var button = $(this).find(".delete");
+
+    if (button.hasClass("confirm")) {
+      form.submit();
+    } else {
+      // Confirm deletion
+      button.val("Sure?");
+      button.addClass("confirm");
+
+      // Revert if they stop hovering
+      $(this).closest(".upload").mouseleave(function() {
+        button.val("Delete");
+        button.removeClass("confirm");
+      });
+    }
+
+    return false;  // Don't submit
+  });
+
+  // AJAX upload submission
+  // For some reason rails refuses to do this for us
+  $("#upload-form").on("ajax:aborted:file", function() {
+    $("#upload-form").trigger("ajax:before");
+
+    var formdata = new FormData($("#upload-form").get(0));
+    $.ajax({
+      url: "/uploads",
+      type: "POST",
+      data: formdata,
+      dataType: "script",
+      contentType: false,
+      processData: false
+    });
+
+    return false;  // Override regular submission
+  });
+
+  // Insert image
+  $(".insert").click(function() {
+    var address = $(this).closest(".insertable").data("address");
+    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + address + '" />');
+    $(".resizable").hover(resizableenter, resizableleave);
+  });
 }
