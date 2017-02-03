@@ -13,6 +13,14 @@ $(document).ready(function() {
   $("#editor").mouseup(updateselections);
   $("#editor").keyup(updateselections);
 
+  // Disable tabbing away from editor
+  $("#editor").keydown(function(e) {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      document.execCommand("indent", false, null);
+    }
+  });
+
   // Style color selections (just for fun)
   $("#fontcolor option").each(function() {
     $(this).css("background", $(this).val());
