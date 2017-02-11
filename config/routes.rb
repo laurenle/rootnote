@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pdfs
+  resources :document_pages
   get 'sessions/new'
 
   get 'sessions/create'

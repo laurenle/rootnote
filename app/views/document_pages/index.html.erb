@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Document Pages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @document_pages.each do |document_page| %>
+      <tr>
+        <td><%= document_page.number %></td>
+        <td><%= link_to 'Show', document_page %></td>
+        <td><%= link_to 'Edit', edit_document_page_path(document_page) %></td>
+        <td><%= link_to 'Destroy', document_page, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Document Page', new_document_page_path %>
