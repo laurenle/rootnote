@@ -32,7 +32,7 @@ button#save:active {background: #53a07b; color: #fff;}
 #insertpages {position: relative;}
 .insertpage {position: absolute; left: 0; top: 0; display: none; width: 100%; overflow: auto; background: #ddd; padding: 6pt;}
 
-#uploadcontainer {display: flex; flex-flow: row wrap; align-items: center;}
+.uploadcontainer {display: flex; flex-flow: row wrap; align-items: center;}
 .upload {width: 100px; height: 100px; margin: 0 6pt 6pt 0; background-position: center; background-repeat: no-repeat; display: flex; flex-flow: column nowrap; justify-content: center; align-items: stretch;}
 .upload button, .upload input {display: none; margin: 2pt 0 2pt 0; width: 100%;}
 .upload:hover button, .upload:hover input {display: inline-block;}

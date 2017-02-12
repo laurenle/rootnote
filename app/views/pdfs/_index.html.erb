@@ -1,0 +1,7 @@
+<%= render "pdfs/form" %>
+
+<% if defined?(@document_pages) %>
+	<%= render "document_pages/index" %>
+<% else %>
+	<%= render "pdfs/display" %>
+<% end %>

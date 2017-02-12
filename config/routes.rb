@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :pdfs
-  resources :document_pages
   get 'sessions/new'
 
   get 'sessions/create'
@@ -8,7 +6,11 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   resources :users, except: [:index]
-  resources :uploads, only: [:index, :create, :destroy, :show]
+  resources :uploads, only: [:index, :create, :destroy]
+
+  resources :pdfs, only: [:index, :show, :create, :destroy] do
+    resources :document_pages, only: [:create, :destroy]
+  end
 
   resources :folders do
     resources :notes

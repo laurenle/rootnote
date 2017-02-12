@@ -1,74 +1,65 @@
 class PdfsController < ApplicationController
-  before_action :set_pdf, only: [:show, :edit, :update, :destroy]
+  before_action :set_pdf, only: [:show, :destroy]
 
-  # GET /pdfs
-  # GET /pdfs.json
   def index
-    @pdfs = Pdf.all
+    render_index
   end
 
-  # GET /pdfs/1
-  # GET /pdfs/1.json
   def show
+    @document_pages = @pdf.document_pages.order(:number)
+    render_index
   end
 
-  # GET /pdfs/new
-  def new
-    @pdf = Pdf.new
-  end
-
-  # GET /pdfs/1/edit
-  def edit
-  end
-
-  # POST /pdfs
-  # POST /pdfs.json
   def create
     @pdf = Pdf.new(pdf_params)
+    pdf_file = params[:pdf][:file]
+    @pdf.name = File.basename(pdf_file.path)
+    @pdf.save
 
-    respond_to do |format|
-      if @pdf.save
-        format.html { redirect_to @pdf, notice: 'Pdf was successfully created.' }
-        format.json { render :show, status: :created, location: @pdf }
-      else
-        format.html { render :new }
-        format.json { render json: @pdf.errors, status: :unprocessable_entity }
-      end
+    # TODO: Lots of error handling
+
+    # Convert pdf to images
+    pdf_path = File.absolute_path(pdf_file.path)
+    dir = File.dirname(pdf_path)
+    image_path = File.join(dir, "%d.jpg")
+    Paperclip.run("convert", "-density 150 :pdf_path -quality 80 -geometry 500x700 -alpha remove :image_path",
+                  pdf_path: pdf_path, image_path: image_path)
+    
+    # Save each page with image attachments
+    i = 0;
+    while File.exist?(image_path = File.join(dir, "#{i}.jpg")) do
+      image_file = File.open(image_path)
+      doc_page = DocumentPage.new(pdf_id: @pdf.id, number: i, image: image_file)
+      doc_page.save
+      image_file.close
+      File.delete(image_path)
+      i += 1
     end
+
+    render_index
   end
 
-  # PATCH/PUT /pdfs/1
-  # PATCH/PUT /pdfs/1.json
-  def update
-    respond_to do |format|
-      if @pdf.update(pdf_params)
-        format.html { redirect_to @pdf, notice: 'Pdf was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pdf }
-      else
-        format.html { render :edit }
-        format.json { render json: @pdf.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /pdfs/1
-  # DELETE /pdfs/1.json
   def destroy
     @pdf.destroy
-    respond_to do |format|
-      format.html { redirect_to pdfs_url, notice: 'Pdf was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render_index
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_pdf
       @pdf = Pdf.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def pdf_params
-      params.fetch(:pdf, {})
+      params.require(:pdf).permit(:user_id)
+    end
+
+    def render_index
+      @pdf = Pdf.new
+      @pdfs = current_user.pdfs.order(created_at: :desc)
+
+      respond_to do |format|
+        format.html { render partial: 'pdfs/index' }
+        format.json { render partial: 'pdfs/refresh', format: 'js' }
+      end
     end
 end
