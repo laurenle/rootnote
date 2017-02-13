@@ -41,4 +41,4 @@ button#save:active {background: #53a07b; color: #fff;}
 input.confirm {background: #fc4c49; transition: background-color 0.5s;}
 input.confirm:hover {background: #fc4c49;}
 
-.loadingcover {position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #000; opacity: 0.5;}
+.loadingcover {position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.8; background: #ddd image-url("ajax-loader.gif") center no-repeat;}
