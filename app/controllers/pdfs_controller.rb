@@ -75,12 +75,9 @@ class PdfsController < ApplicationController
     end
 
     def render_index
-      @pdf = Pdf.new if @pdf == nil
-      @pdfs = current_user.pdfs.order(created_at: :desc)
-
       respond_to do |format|
         format.html { render partial: 'pdfs/index' }
-        format.json { render partial: 'pdfs/refresh', format: 'js' }
+        format.js { render partial: 'pdfs/refresh', format: 'js' }
       end
     end
 end

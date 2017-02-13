@@ -3,7 +3,7 @@ class DocumentPage < ApplicationRecord
 	validates :number, presence: true
 
 	has_attached_file :image, styles: {
-		thumb: '100x100>',
+		thumb: '130x130>',
 		large: '500x700>'
 	}
 

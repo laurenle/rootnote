@@ -31,12 +31,14 @@ button#save:active {background: #53a07b; color: #fff;}
 #inserttabs button.selected {background: #ddd;}
 #insertpages {position: relative;}
 .insertpage {position: absolute; left: 0; top: 0; display: none; width: 100%; overflow: auto; background: #ddd; padding: 6pt;}
+.insertpage a {margin-bottom: 10px;}
 
-.uploadcontainer {display: flex; flex-flow: row wrap; align-items: center;}
-.upload {width: 100px; height: 100px; margin: 0 6pt 6pt 0; background-position: center; background-repeat: no-repeat; display: flex; flex-flow: column nowrap; justify-content: center; align-items: stretch;}
-.upload button, .upload input {display: none; margin: 2pt 0 2pt 0; width: 100%;}
-.upload:hover button, .upload:hover input {display: inline-block;}
-.upload input.confirm {background: #fc4c49; transition: background-color 0.5s;}
-.upload input.confirm:hover {background: #fc4c49;}
+#uploadcontainer, #pdfcontainer {display: flex; flex-flow: row wrap; align-items: center;}
+.upload, .pdf {width: 100px; height: 100px; margin: 0 6pt 6pt 0; background-position: center; background-repeat: no-repeat; display: flex; flex-flow: column nowrap; justify-content: center; align-items: stretch;}
+.pdf {width: 130px; height: 130px;}
+.upload button, .upload input, .pdf button, .pdf input {display: none; margin: 2pt 0 2pt 0; width: 100%;}
+.upload:hover button, .upload:hover input, .pdf:hover button, .pdf:hover input {display: inline-block;}
+input.confirm {background: #fc4c49; transition: background-color 0.5s;}
+input.confirm:hover {background: #fc4c49;}
 
 .loadingcover {position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #000; opacity: 0.5;}

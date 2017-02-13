@@ -1,4 +1,4 @@
-<%= form_for @pdf do |f| %>
+<%= form_for @pdf, multipart: true, remote: true, html: {id: 'pdf-form', name: 'pdf-form'}, data: {type: 'script'} do |f| %>
   <% if @pdf.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@pdf.errors.count, "error") %> prohibited this pdf from being saved:</h2>

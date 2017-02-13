@@ -1,3 +1,6 @@
+<% @pdf = Pdf.new if @pdf == nil
+   @pdfs = current_user.pdfs.order(created_at: :desc) %>
+
 <%= render "pdfs/form" %>
 
 <% if defined?(@document_pages) %>

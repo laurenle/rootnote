@@ -53,9 +53,9 @@ $(document).ready(function() {
   });
 
   // Insert menu tab switching
-  changetab("image");
-  $("#imagetab").click(function() {
-    changetab("image");
+  changetab("upload");
+  $("#uploadtab").click(function() {
+    changetab("upload");
   });
   $("#phonetab").click(function() {
     changetab("phone");
@@ -72,8 +72,9 @@ $(document).ready(function() {
     $(this).find(".loadingcover").remove();
   });
 
-  // Bind uploads/index events
-  binduploadsevents();
+  // Bind insert menu events
+  bindinsertevents("upload");
+  bindinsertevents("pdf");
 
   /* ---------- WYSIWYG functions ---------- */
   // Font size
@@ -243,39 +244,39 @@ function changetab(newtab) {
   $("#" + inserttab + "tab").addClass("selected");
 }
 
-// Function for binding everything inside the uploads/index render
+// Function for binding everything inside the insert menu renders
 // Consolidated here because we need to do this on document ready and whenever AJAX updates the render
-function binduploadsevents() {
+function bindinsertevents(insertable_name) {
   // Delete confirmation
-  $(".delete-upload").submit(function() {
+  $(".delete-" + insertable_name).submit(function() {
     var form = $(this);
     var button = $(this).find(".delete");
 
     if (button.hasClass("confirm")) {
-      form.submit();
-    } else {
-      // Confirm deletion
-      button.val("Sure?");
-      button.addClass("confirm");
-
-      // Revert if they stop hovering
-      $(this).closest(".upload").mouseleave(function() {
-        button.val("Delete");
-        button.removeClass("confirm");
-      });
+      return true;  // Submit
     }
+
+    // Confirm deletion
+    button.val("Sure?");
+    button.addClass("confirm");
+
+    // Revert if they stop hovering
+    $(this).closest("." + insertable_name).mouseleave(function() {
+      button.val("Delete");
+      button.removeClass("confirm");
+    });
 
     return false;  // Don't submit
   });
 
-  // AJAX upload submission
+  // AJAX file submission
   // For some reason rails refuses to do this for us
-  $("#upload-form").on("ajax:aborted:file", function() {
-    $("#upload-form").trigger("ajax:before");
+  $("#" + insertable_name + "-form").on("ajax:aborted:file", function() {
+    $("#" + insertable_name + "-form").trigger("ajax:before");
 
-    var formdata = new FormData($("#upload-form").get(0));
+    var formdata = new FormData($("#" + insertable_name + "-form").get(0));
     $.ajax({
-      url: "/uploads",
+      url: "/" + insertable_name + "s",
       type: "POST",
       data: formdata,
       dataType: "script",
@@ -287,7 +288,7 @@ function binduploadsevents() {
   });
 
   // Insert image
-  $(".insert").click(function() {
+  $("#insert" + insertable_name + " .insert").click(function() {
     var address = $(this).closest(".insertable").data("address");
     document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + address + '" />');
     $(".resizable").hover(resizableenter, resizableleave);

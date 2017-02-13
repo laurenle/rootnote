@@ -1,11 +1,12 @@
 <% if @pdfs.empty? %>
   <b>No PDFs yet!</b>
 <% else %>
-  <div class="uploadcontainer">
+  <div class="pdfcontainer">
   <% for pdf in @pdfs.each %>
-    <div class="upload" style="background-image: url('<%= pdf.document_pages[0].image.url(:thumb) %>')">
-      <button type="button">Insert</button>
-      <%= button_to "Delete", pdf, method: :delete, remote: true, class: "delete", form_class: "delete-upload" %>
+    <div class="pdf" style="background-image: url('<%= pdf.document_pages[0].image.url(:thumb) %>')">
+      <button type="button">Insert all</button>
+      <%= button_to "Insert page", pdf, method: :get, remote: true %>
+      <%= button_to "Delete", pdf, method: :delete, remote: true, class: "delete", form_class: "delete-pdf" %>
     </div>
   <% end %>
   </div>
