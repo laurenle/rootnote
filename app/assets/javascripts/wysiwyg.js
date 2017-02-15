@@ -293,4 +293,20 @@ function bindinsertevents(insertable_name) {
     document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + address + '" />');
     $(".resizable").hover(resizableenter, resizableleave);
   });
+
+  // Insert PDF table
+  if (insertable_name === "pdf") {
+    $(".insertpdftable").click(function() {
+      // Construct HTML
+      var html = '<table class="pdftable">';
+      $("#pdfcontainer .insertable").each(function() {
+        var address = $(this).data("address");
+        html += '<tr><td class="page" contentEditable="false"><img src="' + address + '" /></td><td></td></tr>';
+      });
+      html += '</table>';
+
+      // Insert table at end of editor so they can't put it somewhere weird
+      $("#editor").append(html);
+    });
+  }
 }

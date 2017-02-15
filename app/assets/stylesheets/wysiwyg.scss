@@ -18,7 +18,7 @@ button#save:active {background: #53a07b; color: #fff;}
 #notice {padding: 6pt; float: right;}
 
 #notecontainer {width: 100%; padding: 15pt; overflow: auto;}
-#note {width: 50%;}
+#note {width: 70%;}
 #note_title {width: 100%; border: none; font-size: 22pt; font-weight: normal; margin: 0;}
 #editor {width: 100%; min-height: 200pt;}
 
@@ -31,7 +31,7 @@ button#save:active {background: #53a07b; color: #fff;}
 #inserttabs button.selected {background: #ddd;}
 #insertpages {position: relative;}
 .insertpage {position: absolute; left: 0; top: 0; display: none; width: 100%; overflow: auto; background: #ddd; padding: 6pt;}
-.insertpage a {margin-bottom: 10px;}
+.insertpage a, .insertpage button {margin-bottom: 10px;}
 
 #uploadcontainer, #pdfcontainer {display: flex; flex-flow: row wrap; align-items: center;}
 .upload, .pdf {width: 100px; height: 100px; margin: 0 6pt 6pt 0; background-position: center; background-repeat: no-repeat; display: flex; flex-flow: column nowrap; justify-content: center; align-items: stretch;}
