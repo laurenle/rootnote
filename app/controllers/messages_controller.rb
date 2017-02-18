@@ -12,19 +12,11 @@ class MessagesController < ApplicationController
       break if i > 5
       success += 1 if accepted_media.include? params["MediaContentType#{i}"]
     end
-    boot_twilio
+    @client = Message.boot_twilio
     sms = @client.messages.create(
       from: Rails.application.config.twilio_number,
       to: from_number,
       body: "Thanks for your message! Your number is #{from_number}. We successfully received #{success} images from you"
     )
-  end
-
-  private
-
-  def boot_twilio
-    account_sid = Rails.application.config.twilio_sid
-    auth_token = Rails.application.config.twilio_token
-    @client = Twilio::REST::Client.new account_sid, auth_token
   end
 end

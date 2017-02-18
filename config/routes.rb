@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :users, except: [:index]
   resources :uploads, only: [:index, :create, :destroy, :show]
+  resources :phone_numbers
 
   resources :folders do
     resources :notes

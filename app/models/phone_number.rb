@@ -12,8 +12,10 @@ class PhoneNumber < ApplicationRecord
   end
 
   private
-  
+
   def set_defaults
     self.verified = false
+    # Assume a US phone number
+    self.number.prepend("+1-")
   end
 end

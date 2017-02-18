@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218012338) do
+ActiveRecord::Schema.define(version: 20170218021356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 20170218012338) do
     t.boolean  "verified"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_phone_numbers_on_user_id", using: :btree
   end
 
   create_table "uploads", force: :cascade do |t|
@@ -75,6 +77,10 @@ ActiveRecord::Schema.define(version: 20170218012338) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "phone_number_id"
+    t.index ["phone_number_id"], name: "index_users_on_phone_number_id", using: :btree
   end
 
+  add_foreign_key "phone_numbers", "users"
+  add_foreign_key "users", "phone_numbers"
 end

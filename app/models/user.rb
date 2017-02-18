@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   has_many :folders, dependent: :destroy
   has_many :uploads, dependent: :destroy
-  has :phone_number, dependent: :destroy
+  has_one :phone_number, dependent: :destroy
   validate :valid_email?
 
   has_attached_file :avatar, styles: {
