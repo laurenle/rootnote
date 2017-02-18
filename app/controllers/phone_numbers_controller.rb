@@ -19,7 +19,7 @@ class PhoneNumbersController < ApplicationController
     respond_to do |format|
       if @phone_number.save
         Message.confirm_recipient(@phone_number.number)
-        format.html { redirect_to @phone_number, notice: 'Phone number was successfully updated.' +
+        format.html { redirect_to phone_numbers_url, notice: 'Phone number was successfully updated.' +
         ' You should receive a verification text shortly.' }
         format.json { render :show, status: :created, location: @phone_number }
       else
@@ -34,7 +34,7 @@ class PhoneNumbersController < ApplicationController
   def update
     respond_to do |format|
       if @phone_number.update(phone_number_params)
-        format.html { redirect_to @phone_number, notice: 'Phone number was successfully updated. ' + 
+        format.html { redirect_to phone_numbers_url, notice: 'Phone number was successfully updated. ' + 
           'You should receive a verification text shortly.' }
         format.json { render :show, status: :ok, location: @phone_number }
       else
@@ -61,7 +61,7 @@ class PhoneNumbersController < ApplicationController
     end
 
     def confirm_phone_number_ownership
-      redirect_to folders_url unless @phone_number.user_id == current_user.id
+      redirect_to phone_numbers_url unless @phone_number.user_id == current_user.id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
