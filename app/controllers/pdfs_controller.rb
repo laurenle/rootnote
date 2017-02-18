@@ -17,7 +17,7 @@ class PdfsController < ApplicationController
     pdf_path = File.absolute_path(pdf_file.path)
 
     # Verify this is a pdf that meets the page limit
-    page_limit = 20
+    page_limit = 30
     if File.extname(pdf_file.path) != ".pdf"
       @pdf.errors[:base] << "File must be a PDF"
       render_index

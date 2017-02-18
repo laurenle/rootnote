@@ -8,9 +8,7 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   resources :uploads, only: [:index, :create, :destroy]
 
-  resources :pdfs, only: [:index, :show, :create, :destroy] do
-    resources :document_pages, only: [:create, :destroy]
-  end
+  resources :pdfs, only: [:index, :show, :create, :destroy]
 
   resources :folders do
     resources :notes
