@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117032243) do
+ActiveRecord::Schema.define(version: 20170218012338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "document_pages", force: :cascade do |t|
+    t.integer  "number"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "pdf_id"
+  end
 
   create_table "folders", force: :cascade do |t|
     t.string   "name"
@@ -26,6 +37,20 @@ ActiveRecord::Schema.define(version: 20170117032243) do
     t.string   "title"
     t.text     "body"
     t.integer  "folder_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pdfs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.integer  "user_id"
+  end
+
+  create_table "phone_numbers", force: :cascade do |t|
+    t.string   "number"
+    t.boolean  "verified"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -6,11 +6,11 @@ class MessagesController < ApplicationController
     from_number = params["From"]
     accepted_media = ['image/gif', 'image/png', 'image/jpeg']
     number_images = params["NumMedia"].to_i
+
     success = 0
     number_images.times do |i|
-      if accepted_media.include? params["MediaContentType#{i}"]
-        success += 1
-      end
+      break if i > 5
+      success += 1 if accepted_media.include? params["MediaContentType#{i}"]
     end
     boot_twilio
     sms = @client.messages.create(
