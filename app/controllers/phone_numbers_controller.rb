@@ -14,11 +14,13 @@ class PhoneNumbersController < ApplicationController
   # POST /phone_numbers
   # POST /phone_numbers.json
   def create
+    phone_number_params[:number].prepend("+1-")
     @phone_number = PhoneNumber.new(phone_number_params)
+    @phone_number.update_attribute(:verified, false)
 
     respond_to do |format|
       if @phone_number.save
-        Message.confirm_recipient(@phone_number.number)
+        Message.send_confirmation(@phone_number.number, current_user.email)
         format.html { redirect_to phone_numbers_url, notice: 'Phone number was successfully updated.' +
         ' You should receive a verification text shortly.' }
         format.json { render :show, status: :created, location: @phone_number }
