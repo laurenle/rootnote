@@ -19,7 +19,7 @@ class Message
     user_number = PhoneNumber.find_by number: hyphenated_number
     if (text_body).upcase == 'YES'
       user_number.update_attribute(:verified, true)
-      send_message(sender, "You're good to go! Text up to 5 images at a time to upload direct 2 RootNote")
+      send_message(sender, "You're good to go! Text up to 5 images at a time to upload direct to RootNote")
     end
   end
 

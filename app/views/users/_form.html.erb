@@ -1,10 +1,10 @@
-<%= form_for(user, multipart: true) do |f| %>
-  <% if user.errors.any? %>
+<%= form_for(@user, multipart: true) do |f| %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this @user from being saved:</h2>
 
       <ul>
-      <% user.errors.full_messages.each do |message| %>
+      <% @user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -25,13 +25,6 @@
     <%= f.label :password %>
     <%= f.password_field :password %>
   </div>
-
-  <%= f.fields_for :phone_number do |phone_number_form| %>
-    <div class="field">
-      <label for="number">Phone number (optional)</label>
-      <%= phone_number_form.telephone_field(:number, :value => user.phone_number.number) %>
-    </div>
-  <% end %>
 
   <div class="field">
     <label for="avatar">Avatar (optional)</label>

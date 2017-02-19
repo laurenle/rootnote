@@ -2,17 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user, :verify_user, only: [:show, :edit, :update, :destroy]
   skip_before_filter :require_login, only: [:new, :create]
 
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-  end
-
   # GET /users/new
   def new
     @user = User.new
@@ -26,8 +15,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    @user.phone_number.build
-
+    
     if @user.save
       redirect_to @user, notice: 'User was successfully created.'
       session[:user_id] = @user.id
@@ -40,7 +28,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to edit_user_path(@user), notice: 'User was successfully updated.'
     else
       render :edit
     end
@@ -51,7 +39,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     reset_session
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    redirect_to root_url, notice: 'User was successfully destroyed.'
   end
 
   private

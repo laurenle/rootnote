@@ -12,16 +12,16 @@
     </tr>
   </thead>
 
-  <% if @phone_number %>
+  <% if phone_number %>
   <tbody>
       <tr>
-        <td><%= @phone_number.number %></td>
-        <td><%= link_to 'Edit', edit_phone_number_path(@phone_number) %></td>
-        <td><%= link_to 'Destroy', @phone_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= phone_number.number %></td>
+        <td><%= link_to 'Edit', edit_phone_number_path(phone_number) %></td>
+        <td><%= link_to 'Destroy', phone_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
       <tr>
         <td>Status: 
-          <% if @phone_number.verified %>
+          <% if phone_number.verified %>
             <b>Verified</b>
           <% else %>
             <b>Awaiting verification</b>
@@ -31,7 +31,7 @@
   </tbody>
   <% else %>
   <h3>No phone number on file</h3>
-    <%= render 'form', phone_number: PhoneNumber.new %>
+    <%= render 'phone_numbers/form', phone_number: PhoneNumber.new %>
   <% end %>
 </table>
 
