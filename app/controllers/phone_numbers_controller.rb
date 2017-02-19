@@ -14,7 +14,6 @@ class PhoneNumbersController < ApplicationController
   # POST /phone_numbers
   # POST /phone_numbers.json
   def create
-    phone_number_params[:number].prepend("+1-")
     @phone_number = PhoneNumber.new(phone_number_params)
     @phone_number.update_attribute(:verified, false)
 

@@ -26,6 +26,13 @@
     <%= f.password_field :password %>
   </div>
 
+  <%= f.fields_for :phone_number do |phone_number_form| %>
+    <div class="field">
+      <label for="number">Phone number (optional)</label>
+      <%= phone_number_form.telephone_field(:number, :value => user.phone_number.number) %>
+    </div>
+  <% end %>
+
   <div class="field">
     <label for="avatar">Avatar (optional)</label>
     <%= f.file_field :avatar %>

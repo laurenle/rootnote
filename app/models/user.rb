@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_one :phone_number, dependent: :destroy
   validate :valid_email?
 
+  accepts_nested_attributes_for :phone_number, allow_destroy: true, reject_if: lambda {|attributes| attributes['kind'].blank?}
+
   has_attached_file :avatar, styles: {
     thumb: '100x100>',
     square: '200x200#',
