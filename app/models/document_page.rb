@@ -1,0 +1,12 @@
+class DocumentPage < ApplicationRecord
+	belongs_to :pdf
+	validates :number, presence: true
+
+	has_attached_file :image, styles: {
+		thumb: '130x130>',
+		large: '500x700>'
+	}
+
+	validates_attachment_presence :image
+	validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+end

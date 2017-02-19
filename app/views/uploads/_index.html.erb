@@ -1,5 +1,4 @@
-<!-- Setting these variables here because this is used in so many places -->
-<% @upload = Upload.new
+<% @upload = Upload.new if @upload == nil
    @uploads = current_user.uploads.order(created_at: :desc) %>
 
 <%= render 'uploads/form' %>

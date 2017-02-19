@@ -12,8 +12,12 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   resources :users, except: [:index]
-  resources :uploads, only: [:index, :create, :destroy, :show]
+
   resources :phone_numbers
+
+  resources :uploads, only: [:index, :create, :destroy]
+
+  resources :pdfs, only: [:index, :show, :create, :destroy]
 
   resources :folders do
     resources :notes

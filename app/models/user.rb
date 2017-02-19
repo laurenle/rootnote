@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :folders, dependent: :destroy
   has_many :uploads, dependent: :destroy
   has_one :phone_number, dependent: :destroy
+  has_many :pdfs, dependent: :destroy
   validate :valid_email?
 
   accepts_nested_attributes_for :phone_number, allow_destroy: true, reject_if: lambda {|attributes| attributes['kind'].blank?}
