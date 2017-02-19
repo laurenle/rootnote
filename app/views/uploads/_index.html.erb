@@ -1,5 +1,2 @@
-<% @upload = Upload.new if @upload == nil
-   @uploads = current_user.uploads.order(created_at: :desc) %>
-
-<%= render 'uploads/form' %>
-<%= render 'uploads/display' %>
+<%= render 'uploads/form', upload: Upload.new %>
+<%= render 'uploads/display', uploads: uploads %>
