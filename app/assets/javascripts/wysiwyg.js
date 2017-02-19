@@ -3,6 +3,8 @@ var inserttab;
 var hovering;
 var resizing;
 var starty, startx, startw, starth;
+var level, progress;
+var levelcolors = ["#f44b42", "#f48f41", "#e2dd41", "#55ba51", "#4cb5f7", "#b858ef"];
 
 $(document).ready(function() {
   /* ---------- Setup ---------- */
@@ -56,9 +58,6 @@ $(document).ready(function() {
   changetab("upload");
   $("#uploadtab").click(function() {
     changetab("upload");
-  });
-  $("#phonetab").click(function() {
-    changetab("phone");
   });
   $("#pdftab").click(function() {
     changetab("pdf");
@@ -124,7 +123,7 @@ $(document).ready(function() {
     $("form.edit_note").submit();
   });
 
-  // Image resizing ----------
+  /* ---------- Image resizing ---------- */
   hovering = false;
   resizing = null;
   $(".resizable").hover(resizableenter, resizableleave);
@@ -152,9 +151,45 @@ $(document).ready(function() {
 
   // Stop resizing on mouseup
   $(document).mouseup(function() {
-    resizing = null;
-    $("#resizer").remove();
+    if (resizing) {
+      resizing = null;
+      $("#resizer").remove();
+    }
   });
+
+  /* ---------- Productivity meter ---------- */
+  level = 0;
+  progress = 0;
+  startover = false;
+
+  $("#meter #text").html("Level " + level);
+  $("#meter #filled").css("background", levelcolors[level % 6]);
+
+  // Things that change progress
+  $(window).blur(function() {
+    startover = true;
+  });
+  $("#editor").keypress(function() {
+    progress += 0.4;
+  });
+
+  // Update meter every second
+  setInterval(function() {
+    if (startover) {
+      level = 0;
+      progress = 0;
+      $("#meter #text").html("Level 0: Started over :(");
+    }
+
+    if (progress > 100) {
+      progress -= 100;
+      level++;
+      $("#meter #text").html("Level " + level);
+      $("#meter #filled").css("background", levelcolors[level % 6]);
+    }
+
+    $("#meter #filled").css("width", progress + "%");
+  }, 2000);
 });
 
 // Update font values to where the cursor is
@@ -290,8 +325,8 @@ function bindinsertevents(insertable_name) {
   // Insert image
   $("#insert" + insertable_name + " .insert").click(function() {
     var address = $(this).closest(".insertable").data("address");
-    document.execCommand("insertHTML", false, '<img class="resizable" style="width: 200pt;" src="' + address + '" />');
-    $(".resizable").hover(resizableenter, resizableleave);
+    document.execCommand("insertHTML", false, '<img class="new resizable" style="width: 200pt;" src="' + address + '" />');
+    $(".new.resizable").hover(resizableenter, resizableleave).removeClass("new");
   });
 
   // Insert PDF table

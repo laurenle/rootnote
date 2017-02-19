@@ -16,6 +16,6 @@
 	<div id="note">
 		<h1 id="note_title"><%= @note.title %></h1>
 		<hr>
-		<%= sanitize @note.body, tags: %w(i u b ul ol li strong font img h1 h2 h3 h4 h5 br table tr td), attributes: %w(color src size font-style style class) %>
+		<%= sanitize @note.body, tags: %w(i u b ul ol li strong font img h1 h2 h3 h4 h5 br table tr td div), attributes: %w(color src size font-style style class) %>
 	</div>
 </div>

@@ -27,7 +27,11 @@
 	<button type="button" id="numberedlist">Numbered list</button> |
 	<button type="button" id="clearformat">Clear formatting</button> |
 	<button type="button" id="insert">Show insert menu</button>
-	<button type="button" id="save">Save changes</button>
+	<div id="right">
+		Productivity:
+		<div id="metercontainer"><div id="meter"><div id="filled"></div><div id="text"></div></div></div>
+		<button type="button" id="save">Save changes</button>
+	</div>
 </div>
 
 <div id="notecontainer">
@@ -44,15 +48,11 @@
 <div id="insertmenu">
 	<div id="inserttabs">
 		<button type="button" id="uploadtab">Image</button>
-		<button type="button" id="phonetab">From phone</button>
 		<button type="button" id="pdftab">PDF</button>
 	</div>
 	<div id="insertpages">
 		<div class="insertpage" id="insertupload">
       		<%= render 'uploads/index' %>
-		</div>
-		<div class="insertpage" id="insertphone">
-			Insert from phone form here
 		</div>
 		<div class="insertpage" id="insertpdf">
 			<%= render 'pdfs/index' %>

@@ -3,19 +3,26 @@ html, body {overflow: hidden;}
 
 #note_body {display: none;}
 
-#controls {width: 100%; background: #ddd; font-size: 10pt;}
-#controls button, #controls select, #controls a {display: inline-block; padding: 6pt; border: none; background: none; font-size: 10pt; color: #000; text-decoration: none;}
+#controls {width: 100%; height: 24pt; background: #ddd; font-size: 10pt;}
+#controls button, #controls select, #controls a {display: inline-block; height: 100%; padding: 0 6pt 0 6pt; border: none; background: none; font-size: 10pt; color: #000; text-decoration: none;}
+#controls a {height: auto; padding: 6pt;}
 #controls button:hover, #controls select:hover, #controls a:hover {background: #ccc;}
 #controls button:active {background: #bbb;}
+#controls #right {display: inline-block; float: right; height: 100%;}
 select#fontcolor option {color: #fff;}
 select#fontcolor option:first-child {color: #000;}
 button#bold {font-weight: bold;}
 button#italic {font-style: italic;}
 button#underline {text-decoration: underline;}
-button#save {float: right; background: #53a07b; color: #fff;}
+button#save {background: #53a07b; color: #fff;}
 button#save:hover {background: #fff; color: #53a07b;}
 button#save:active {background: #53a07b; color: #fff;}
-#notice {padding: 6pt; float: right;}
+#notice {padding: 6pt; float: right; color: #387a5a;}
+
+#metercontainer {display: inline-block; vertical-align: top; height: 100%; margin: 0 6pt 0 0;}
+#meter {display: inline-block; position: relative; width: 150pt; height: 100%; margin: 0 0 0 6pt; background: #bbb;}
+#meter #filled {display: inline-block; height: 100%; transition: width 0.5s;}
+#meter #text {position: absolute; left: 6pt; top: 6pt; color: #fff;}
 
 #notecontainer {width: 100%; padding: 15pt; overflow: auto;}
 #note {width: 70%;}
