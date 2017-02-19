@@ -10,3 +10,8 @@ font[size="5"] {font-size: 18pt;}
 font[size="6"] {font-size: 20pt;}
 font[size="7"] {font-size: 22pt;}
 ul, ol {margin: 0;}
+
+.pdftable {width: 100%; border-collapse: collapse;}
+.pdftable td {width: 50%; box-sizing: border-box; border: #ddd 1pt solid; vertical-align: top; padding: 10pt;}
+.pdftable .page {padding: 0;}
+.pdftable .page img {width: 100%;}
