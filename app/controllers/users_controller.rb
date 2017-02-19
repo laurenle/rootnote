@@ -17,11 +17,15 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+      redirect_to edit_user_path(@user), notice: 'User was successfully created.'
       session[:user_id] = @user.id
     else
       render :new
     end
+  end
+
+  def show
+    redirect_to edit_user_path(current_user)
   end
 
   # PATCH/PUT /users/1
@@ -45,12 +49,12 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:id]) if current_user == params[:id]
     end
 
     def verify_user
       if session[:user_id] != params[:id].to_i
-        redirect_to User.find(session[:user_id])
+        redirect_to edit_user_path(current_user)
       end
     end
 
