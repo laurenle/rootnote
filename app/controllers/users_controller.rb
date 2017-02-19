@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @phone_number = @user.phone_number if @user.phone_number
   end
 
   # POST /users
