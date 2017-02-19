@@ -27,12 +27,22 @@ $ rake db:migrate
 
 You also need to add the following environment variables. On a Mac, this process looks like this:
 
+
+### Setup Twilio
+To enable MMS uploading, you'll need to create a free trial account at [Twilio](https://www.twilio.com/try-twilio). With a free trial account, you'll be able to send/receive texts from a personal phone number, but you won't be able to send/receive texts from anyone else.
+Once you've created an account, [reserve a phone number](https://www.twilio.com/console/phone-numbers/search), then head over to [Account > Account Settings](https://www.twilio.com/console/account/settings) to get your SID and authtoken. You'll use these in the next step.
+
+
 ### Add the following lines to the file ~/.bashrc:
 ```
 export S3_BUCKET_NAME=your_bucket_name
 export AWS_ACCESS_KEY_ID=your_access_key_id
 export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 export AWS_REGION=us-east-1
+
+export TWILIO_SID=your_twilio_sid
+export TWILIO_TOKEN=your_twilio_auth_token
+export TWILIO_NUMBER=your_twilio_number
 
 export POSTGRES_USER=your_postgres_username
 export POSTGRES_PASSWORD=your_postgres_password
