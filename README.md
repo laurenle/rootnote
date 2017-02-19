@@ -89,7 +89,8 @@ Start your server, then download and run [ngrok](https://ngrok.com/) in a Termin
 ./ngrok 3000
 ``` 
 
-On success, the window running ngrok will give you a "Forwarding" address. 
+On success, the window running ngrok will give you a "Forwarding" address. You'll need to keep this Terminal window open and running as long as you want MMS to work.
+
 1. Navigate to [Twilio > Phone Numbers > Manage Numbers > Active Numbers](https://www.twilio.com/console/phone-numbers/incoming), and click on the phone number you reserved earlier.
 2. Scroll down to "Messaging > A Message Comes in."
 3. From the dropdown, select the option "Webhook."
@@ -97,6 +98,7 @@ On success, the window running ngrok will give you a "Forwarding" address.
 5. Select "HTTP POST" from the second dropdown.
 6. Click the red "Save" button.
 
+Every time you restart ngrok, you'll need to repeat this step.
 
 ## Troubleshooting
 
