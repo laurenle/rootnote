@@ -4,26 +4,20 @@ class UploadsController < ApplicationController
   def index
     @user = current_user
 
-    render partial: 'uploads/index'
+    render_index
   end
 
   def create
     @upload = Upload.new(upload_params)
     @upload.save
 
-    respond_to do |format|
-      format.html { render partial: 'uploads/index' }
-      format.js { render partial: 'uploads/refresh', format: 'js' }
-    end
+    render_index
   end
 
   def destroy
     @upload.destroy
 
-    respond_to do |format|
-      format.html { render partial: 'uploads/index' }
-      format.js { render partial: 'uploads/refresh', format: 'js' }
-    end
+    render_index
   end
 
   private
@@ -33,5 +27,12 @@ class UploadsController < ApplicationController
 
   def upload_params
     params.require(:upload).permit(:file, :user_id)
+  end
+
+  def render_index
+    respond_to do |format|
+      format.html { render partial: 'uploads/index' }
+      format.js { render partial: 'uploads/refresh', format: 'js' }
+    end
   end
 end

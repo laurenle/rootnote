@@ -1,4 +1,5 @@
-<% if uploads.empty? %>
+<%= button_to 'Refresh', uploads_path, method: :get, remote: true %>
+<% if @uploads.empty? %>
   <b>No uploads yet!</b>
 <% else %>
   <div id="uploadcontainer">
