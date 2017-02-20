@@ -95,6 +95,11 @@ Rails.application.configure do
     }
   }
 
+  # MMS/Twilio config data
+  config.twilio_sid = ENV['TWILIO_SID']
+  config.twilio_token = ENV['TWILIO_TOKEN']
+  config.twilio_number = ENV['TWILIO_NUMBER']
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end

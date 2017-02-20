@@ -45,6 +45,20 @@ a:hover {background: #387a5a;}
 .list a {display: inline; background: none; color: #777;}
 .list a:hover {background: #ccc;}
 
+.notice-small {
+  font-size: 12px;
+  text-align: center
+}
+
+.notice-small a {
+  background: none;
+  color: black;
+  padding: 0;
+  font-weight: 700;
+  display: inline;
+  font-size: inherit;
+}
+
 form .field {margin: 0 0 6pt 0;}
 form label {display: inline-block; width: 80pt; text-align: right;}
 form .actions {margin: 0 0 15pt 0;}

@@ -13,6 +13,10 @@ class Upload < ApplicationRecord
   # validate the file has an image extension
   validates_attachment_content_type :file, :content_type => /\Aimage\/.*\Z/
 
+  def file_from_url(url)
+    self.file = open(url)
+  end
+
   def delete_from_disk
     self.file.destroy
   end

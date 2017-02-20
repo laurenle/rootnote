@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resource :messages do
+    collection do
+      post 'reply'
+    end
+  end
+
   get 'sessions/new'
 
   get 'sessions/create'
@@ -6,6 +12,9 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   resources :users, except: [:index]
+
+  resources :phone_numbers
+
   resources :uploads, only: [:index, :create, :destroy]
 
   resources :pdfs, only: [:index, :show, :create, :destroy]

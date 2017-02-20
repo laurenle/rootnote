@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Phone Number</h1>
+
+<p>You can upload images directly to RootNote via MMS.</p>
+<p>Once registered, just send a text to <b><%= Message.get_twilio_number %></b></p>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <% if @phone_number %>
+  <tbody>
+      <tr>
+        <td><%= @phone_number.number %></td>
+        <td><%= link_to 'Edit', edit_phone_number_path(@phone_number) %></td>
+        <td><%= link_to 'Destroy', @phone_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <tr>
+        <td>Status: 
+          <% if @phone_number.verified %>
+            <b>Verified</b>
+          <% else %>
+            <b>Awaiting verification</b>
+          <% end %>
+        </td>
+      </tr>
+  </tbody>
+  <% else %>
+  <h3>No phone number on file</h3>
+    <%= render 'phone_numbers/form', phone_number: PhoneNumber.new %>
+  <% end %>
+</table>
+
+<br>

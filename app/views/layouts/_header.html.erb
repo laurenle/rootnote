@@ -4,7 +4,8 @@
 	  <% if logged_in? -%>
 	    <a href="/folders">Folders</a>
 	    <a href="/notes">All notes</a>
-	    <%= link_to current_user.name, current_user %>
+	    <%= link_to current_user.name, edit_user_path(current_user) %>
+	    <%= link_to 'Contact settings', phone_numbers_path %>
 	    <%= link_to 'Log out', '/logout', method: :delete %>
 	  <% else -%>
 	  	<%= link_to 'Log in', '/login' %>

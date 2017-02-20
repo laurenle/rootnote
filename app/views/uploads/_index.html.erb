@@ -1,5 +1,13 @@
-<% @upload = Upload.new if @upload == nil
-   @uploads = current_user.uploads.order(created_at: :desc) %>
+<%= render 'uploads/form', upload: Upload.new %>
+<%= render 'uploads/display', uploads: uploads %>
 
-<%= render 'uploads/form' %>
-<%= render 'uploads/display' %>
+<p class="notice-small">
+  <% if current_user.phone_number and current_user.phone_number.verified %>
+    Text images to <b><%= Message.get_twilio_number %></b> to upload images directly from your phone. 
+  <% elsif current_user.phone_number %>
+    Verify your phone number and upload images directly to RootNote via MMS. 
+  <% else %>
+    You can upload images directly to RootNote via MMS.</br>
+    Head over to <%= link_to 'Contact Settings', phone_numbers_path, target: :_blank %> to register your phone number now.
+  <% end %>
+</p>

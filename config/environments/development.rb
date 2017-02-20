@@ -40,6 +40,11 @@ Rails.application.configure do
     }
   }
 
+  # MMS/Twilio config data
+  config.twilio_sid = ENV['TWILIO_SID']
+  config.twilio_token = ENV['TWILIO_TOKEN']
+  config.twilio_number = ENV['TWILIO_NUMBER']
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 

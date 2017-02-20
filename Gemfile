@@ -37,6 +37,9 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'paperclip'
 gem 'aws-sdk', '~> 2.3'
 
+# twilio-ruby gem for MMS integration
+gem 'twilio-ruby'
+
 # PDF reader for getting number of pages
 gem 'pdf-reader'
 

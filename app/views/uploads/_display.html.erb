@@ -3,7 +3,7 @@
   <b>No uploads yet!</b>
 <% else %>
   <div id="uploadcontainer">
-  <% for upload in @uploads.each %>
+  <% for upload in uploads.each %>
     <div class="insertable upload" data-address="<%= upload.file.url(:medium) %>" style="background-image: url('<%= upload.file.url(:thumb) %>')">
       <button type="button" class="insert">Insert</button>
       <%= button_to 'Delete', upload, method: :delete, remote: true, class: "delete", form_class: "delete-upload" %>
