@@ -3,7 +3,6 @@ class UploadsController < ApplicationController
 
   def index
     @user = current_user
-
     render_index
   end
 

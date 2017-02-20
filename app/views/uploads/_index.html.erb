@@ -1,5 +1,9 @@
+<% @upload = Upload.new if @upload == nil
+   @uploads = current_user.uploads.order(created_at: :desc) %>
+
+
 <%= render 'uploads/form', upload: Upload.new %>
-<%= render 'uploads/display', uploads: uploads %>
+<%= render 'uploads/display', uploads: @uploads %>
 
 <p class="notice-small">
   <% if current_user.phone_number and current_user.phone_number.verified %>

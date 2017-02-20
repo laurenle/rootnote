@@ -40,7 +40,6 @@ class NotesController < ApplicationController
 
   # GET /folders/1/notes/1/edit
   def edit
-    @uploads = current_user.uploads.order(created_at: :desc)
   end
 
   # POST /folders/1/notes
