@@ -36,7 +36,7 @@
 
 <div id="notecontainer">
 	<div id="note">
-		<%= form_for([@folder, @note]) do |f| %>
+		<%= form_for [@folder, @note], remote: true do |f| %>
 			<%= f.text_field :title, class: "focusable" %>
 			<%= f.text_area :body %>
 		<% end %>

@@ -382,7 +382,7 @@ function bindinsertevents(insertable_name) {
         var address = $(this).data("address");
         html += '<tr><td class="page" contentEditable="false"><img src="' + address + '" /></td><td></td></tr>';
       });
-      html += '</table>';
+      html += '</table><br>';
 
       // Insert table at end of editor so they can't put it somewhere weird
       $("#editor").append(html);
