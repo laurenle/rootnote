@@ -183,10 +183,12 @@ $(document).ready(function() {
   });
 
   // Submit
-  $("#save").click(function() {
+  function wysiwyg_submit() {
     $("#note_body").text($("#editor").html());
     $("form.edit_note").submit();
-  });
+  }
+  $("#save").click(wysiwyg_submit);
+  setInterval(wysiwyg_submit, 60000);  // Autosave
 
   /* ---------- Image resizing ---------- */
   hovering = false;
