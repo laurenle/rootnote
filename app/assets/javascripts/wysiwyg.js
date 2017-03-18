@@ -1,17 +1,56 @@
 // Global variables
-var inserttab;
 var hovering;
 var resizing;
 var starty, startx, startw, starth;
-var level, progress;
-var levelcolors = ["#f44b42", "#f48f41", "#e2dd41", "#55ba51", "#4cb5f7", "#b858ef"];
 
 $(document).ready(function() {
   /* ---------- Setup ---------- */
   // Load saved note into editor
   $("#editor").html($("#note_body").text());
 
-  // Bind selection events
+  // Update font values to where the cursor is
+  function updateselections() {
+    // Get font elements defining color and size for start and end of selection
+    var selection1 = window.getSelection().anchorNode;
+    var selection2 = window.getSelection().focusNode;
+    var selection1color = selection1;
+    while (selection1color && (selection1color.nodeType !== 1 || !selection1color.hasAttribute("color"))) {
+      selection1color = selection1color.parentNode;
+    }
+    var selection2color = selection2;
+    while (selection2color && (selection2color.nodeType !== 1 || !selection2color.hasAttribute("color"))) {
+      selection2color = selection2color.parentNode;
+    }
+    var selection1size = selection1;
+    while (selection1size && (selection1size.nodeType !== 1 || !selection1size.hasAttribute("size"))) {
+      selection1size = selection1size.parentNode;
+    }
+    var selection2size = selection2;
+    while (selection2size && (selection2size.nodeType !== 1 || !selection2size.hasAttribute("size"))) {
+      selection2size = selection2size.parentNode;
+    }
+    
+    // Get values
+    var size = $(selection1size).attr("size") === $(selection2size).attr("size") ?
+      $(selection1size).attr("size") || "2" : "-";
+    var color = $(selection1color).attr("color") === $(selection2color).attr("color") ?
+      $(selection1color).attr("color") || "#000000" : "-";
+    
+    // Set selections
+    size = $('#fontsize option[value="' + size + '"]').length > 0 ? size : "-";
+    $("#fontsize").val(size);
+
+    var rgb = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+    if (rgb) {  // Some browsers return in RGB, so we need to convert to hex
+      color = "#";
+      for (var i = 1; i <=3; i++) {
+        var hex = parseInt(rgb[i]).toString(16);
+        color += hex.length === 1 ? "0" + hex : hex;
+      }
+    }
+    color = $('#fontcolor option[value="' + color + '"]').length > 0 ? color : "#000000";
+    $("#fontcolor").val(color);
+  }
   $("#editor").mouseup(updateselections);
   $("#editor").keyup(updateselections);
 
@@ -55,7 +94,19 @@ $(document).ready(function() {
   });
 
   // Insert menu tab switching
+  var changetab = (function() {
+    var inserttab;
+    return function(newtab) {
+      $("#insert" + inserttab).css("display", "none");
+      $("#" + inserttab + "tab").removeClass("selected");
+      inserttab = newtab;
+      $("#insert" + inserttab).css("display", "block");
+      $("#" + inserttab + "tab").addClass("selected");
+    }
+  })();
+
   changetab("upload");
+
   $("#uploadtab").click(function() {
     changetab("upload");
   });
@@ -158,72 +209,48 @@ $(document).ready(function() {
   });
 
   /* ---------- Productivity meter ---------- */
-  level = 0;
-  progress = 0;
-  startover = false;
+  var levelcolors = ["#f44b42", "#f48f41", "#e2dd41", "#55ba51", "#4cb5f7", "#b858ef"];
 
-  $("#meter #text").html("Level " + level);
-  $("#meter #filled").css("background", levelcolors[level % 6]);
+  function updatelevel() {
+    $("#meter #text").html("Level " + level);
+    $("#meter #filled").css("background", levelcolors[level % 6]);
+  };
+
+  var level = 0;
+  var progress = 0;
+  var startover = false;
+  updatelevel();
 
   // Things that change progress
-  $(window).blur(function() {
-    startover = true;
+  $(document).on("visibilitychange", function() {
+    if (document["hidden"]) {
+      startover = true;
+      console.log("Starting over");
+    }
   });
   $("#editor").keypress(function() {
-    progress += 0.4;
+    progress += 0.7;
   });
 
-  // Update meter every second
+  // Update meter periodically
   setInterval(function() {
     if (startover) {
+      startover = false;
       level = 0;
       progress = 0;
+      updatelevel();
       $("#meter #text").html("Level 0: Started over :(");
     }
 
     if (progress > 100) {
       progress -= 100;
       level++;
-      $("#meter #text").html("Level " + level);
-      $("#meter #filled").css("background", levelcolors[level % 6]);
+      updatelevel();
     }
 
     $("#meter #filled").css("width", progress + "%");
   }, 2000);
 });
-
-// Update font values to where the cursor is
-function updateselections() {
-  // Get font elements defining color and size for start and end of selection
-  var selection1 = window.getSelection().anchorNode;
-  var selection2 = window.getSelection().focusNode;
-  var selection1color = selection1;
-  while (selection1color && (selection1color.nodeType !== 1 || !selection1color.hasAttribute("color"))) {
-    selection1color = selection1color.parentNode;
-  }
-  var selection2color = selection2;
-  while (selection2color && (selection2color.nodeType !== 1 || !selection2color.hasAttribute("color"))) {
-    selection2color = selection2color.parentNode;
-  }
-  var selection1size = selection1;
-  while (selection1size && (selection1size.nodeType !== 1 || !selection1size.hasAttribute("size"))) {
-    selection1size = selection1size.parentNode;
-  }
-  var selection2size = selection2;
-  while (selection2size && (selection2size.nodeType !== 1 || !selection2size.hasAttribute("size"))) {
-    selection2size = selection2size.parentNode;
-  }
-  
-  // Get values
-  var size = $(selection1size).attr("size") === $(selection2size).attr("size") ?
-    $(selection1size).attr("size") || "2" : "-";
-  var color = $(selection1color).attr("color") === $(selection2color).attr("color") ?
-    $(selection1color).attr("color") || "rgb(0,0,0)" : "-";
-  
-  // Set selections
-  $("#fontsize").val(size);
-  $("#fontcolor").val(color);
-}
 
 // Reposition resizer
 function positionresizer(resizable) {
@@ -268,15 +295,6 @@ function resizableleave() {
    window.setTimeout(function() {
     if ($("#resizer:hover").length === 0 && !resizing) $("#resizer").remove();
    }, 200);
-}
-
-// Change insert tab
-function changetab(newtab) {
-  $("#insert" + inserttab).css("display", "none");
-  $("#" + inserttab + "tab").removeClass("selected");
-  inserttab = newtab;
-  $("#insert" + inserttab).css("display", "block");
-  $("#" + inserttab + "tab").addClass("selected");
 }
 
 // Function for binding everything inside the insert menu renders
