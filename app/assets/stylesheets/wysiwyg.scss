@@ -30,7 +30,7 @@ button#save:active {background: #53a07b; color: #fff;}
 #editor {width: 100%; min-height: 200pt;}
 
 .resizable {display: inline-block; position: relative;}
-#resizer {width: 20pt; height: 20pt; background: #ccc; cursor: nwse-resize;}
+#resizer {width: 0; height: 0; border: #bbb 10pt solid; border-left-color: transparent; border-top-color: transparent; cursor: nwse-resize;}
 
 #insertmenu {position: fixed; width: 40%; display: none;}
 #inserttabs button {padding: 6pt; border: none; background: #ccc;}
