@@ -24,6 +24,9 @@ button#save:active {background: #53a07b; color: #fff;}
 #meter #filled {display: inline-block; height: 100%; transition: width 0.5s;}
 #meter #text {position: absolute; left: 6pt; top: 6pt; color: #fff;}
 
+.explanation {text-decoration: underline;}
+.tooltip {position: absolute; width: 200pt; padding: 5pt; background: #eee; border: #ccc 1pt solid; font-size: 10pt; transition: opacity 0.5s;}
+
 #notecontainer {width: 100%; padding: 15pt; overflow: auto;}
 #note {width: 70%;}
 #note_title {width: 100%; border: none; font-size: 22pt; font-weight: normal; margin: 0;}

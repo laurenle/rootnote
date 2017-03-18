@@ -28,7 +28,7 @@
 	<button type="button" id="clearformat">Clear formatting</button> |
 	<button type="button" id="insert">Show insert menu</button>
 	<div id="right">
-		Productivity:
+		Productivity (<span class="productivity explanation">?</span>):
 		<div id="metercontainer"><div id="meter"><div id="filled"></div><div id="text"></div></div></div>
 		<button type="button" id="save">Save changes</button>
 	</div>
@@ -37,7 +37,7 @@
 <div id="notecontainer">
 	<div id="note">
 		<%= form_for([@folder, @note]) do |f| %>
-			<%= f.text_field :title %>
+			<%= f.text_field :title, class: "focusable" %>
 			<%= f.text_area :body %>
 		<% end %>
 		<hr>

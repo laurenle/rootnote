@@ -62,6 +62,20 @@ $(document).ready(function() {
     }
   });
 
+  // Disable defocusing editor (with exceptions)
+  var blurok = false;
+  $("#editor").blur(function() {
+    if (blurok) {
+      blurok = false;
+      return true;
+    }
+    this.focus();
+  });
+  $(".focusable").click(function() {
+    blurok = true;
+    this.focus();
+  });
+
   // Style color selections (just for fun)
   $("#fontcolor option").each(function() {
     $(this).css("background", $(this).val());
@@ -250,6 +264,18 @@ $(document).ready(function() {
 
     $("#meter #filled").css("width", progress + "%");
   }, 2000);
+
+  // Explanation tooltip
+  $(".productivity.explanation").mouseenter(function(e) {
+    $("body").append('<div class="productivity tooltip" style="opacity: 0;"></div>');
+    var tt = $(".productivity.tooltip");
+    tt.html("You will gain progress on this bar by taking notes, but lose progress if you navigate to another page."
+      + "<br><br>Use it as a friendly reminder to stay focused in class.");
+    tt.css({"top": e.pageY, "right": $(window).width() - e.pageX, "opacity": 1});
+  });
+  $(".productivity.explanation").mouseleave(function() {
+    $(".productivity.tooltip").remove();
+  });
 });
 
 // Reposition resizer
