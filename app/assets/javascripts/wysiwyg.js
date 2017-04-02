@@ -4,9 +4,14 @@ var resizing;
 var starty, startx, startw, starth;
 
 $(document).ready(function() {
+  while (!MathJax);  // Wait until MathJax is ready
+
   /* ---------- Setup ---------- */
   // Load saved note into editor
   $("#editor").html($("#note_body").text());
+  MathJax.Hub.queue.Push(function() {  // Typeset any math
+    MathJax.Hub.Typeset($("#editor").get(0));
+  });
 
   // Update font values to where the cursor is
   function updateselections() {
@@ -120,12 +125,14 @@ $(document).ready(function() {
   })();
 
   changetab("upload");
-
   $("#uploadtab").click(function() {
     changetab("upload");
   });
   $("#pdftab").click(function() {
     changetab("pdf");
+  });
+  $("#eqtab").click(function() {
+    changetab("eq");
   });
 
   // Add loading cover while AJAX is happening on any insert menu page
@@ -140,7 +147,34 @@ $(document).ready(function() {
   bindinsertevents("upload");
   bindinsertevents("pdf");
 
-  /* ---------- WYSIWYG functions ---------- */
+  /* ---------- Equation editor ---------- */
+  // Edit existing equation
+  var editequation = function() {
+    // Open equation editor
+    if (showinsert === 0) $("#insert").click();
+    changetab("eq");
+    
+    // Put equation in editor
+    var equation = $(this).find("script").html();
+    $("#eqinput").text(equation).keyup();
+  };
+  $(".equation").click(editequation);
+
+  // Update preview
+  $("#eqinput").keyup(function() {
+    MathJax.Hub.queue.Push(function() {
+      $("#eqpreview").html("\\(" + $("#eqinput").val() + "\\)");
+      MathJax.Hub.Typeset($("#eqpreview").get(0));
+    });
+  });
+
+  // Insert equation
+  $("#inserteq .insert").click(function() {
+    document.execCommand("insertHTML", false, '<div class="new equation"></div>');
+    $(".new.equation").attr("contentEditable", "false").html($("#eqpreview").html()).click(editequation).removeClass("new");
+  });
+
+  /* ---------- Basic WYSIWYG functions ---------- */
   // Font size
   $("#fontsize").change(function() {
     document.execCommand("fontSize", false, parseInt($("#fontsize").val()));
@@ -184,8 +218,14 @@ $(document).ready(function() {
 
   // Submit
   function wysiwyg_submit() {
-    $("#note_body").text($("#editor").html());
-    $("form.edit_note").submit();
+    $("#temp").html($("#editor").html());     // Move to temporary space
+    $("#temp .equation").each(function() {    // Save only equation sources
+      var equation = $(this).find("script").html();
+      $(this).html("\\(" + equation + "\\)");
+    });
+    $("#note_body").text($("#temp").html());  // Get html to save
+    $("#temp").html("");                      // Clear temporary space
+    $("form.edit_note").submit();             // Submit
   }
   $("#save").click(wysiwyg_submit);
   setInterval(wysiwyg_submit, 60000);  // Autosave
@@ -241,7 +281,6 @@ $(document).ready(function() {
   $(document).on("visibilitychange", function() {
     if (document["hidden"]) {
       startover = true;
-      console.log("Starting over");
     }
   });
   $("#editor").keypress(function() {
