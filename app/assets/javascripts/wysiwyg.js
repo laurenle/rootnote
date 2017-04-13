@@ -158,20 +158,29 @@ $(document).ready(function() {
     var equation = $(this).find("script").html();
     $("#eqinput").text(equation).keyup();
   };
-  $(".equation").click(editequation);
+  $("#editor .equation").click(editequation);
 
   // Update preview
-  $("#eqinput").keyup(function() {
+  var updateeqpreview = function() {
     MathJax.Hub.queue.Push(function() {
       $("#eqpreview").html("\\(" + $("#eqinput").val() + "\\)");
       MathJax.Hub.Typeset($("#eqpreview").get(0));
     });
+  }
+  $("#eqinput").keyup(updateeqpreview);
+
+  // Insert TeX from buttons
+  $("#eqcontrols button").click(function() {
+    var tex = $(this).find("script").html();
+    $("#eqinput").append(tex);
+    updateeqpreview();
   });
 
   // Insert equation
   $("#inserteq .insert").click(function() {
     document.execCommand("insertHTML", false, '<div class="new equation"></div>');
-    $(".new.equation").attr("contentEditable", "false").html($("#eqpreview").html()).click(editequation).removeClass("new");
+    $(".new.equation").attr("contentEditable", "false").html($("#eqpreview").html()).before("&nbsp;").after("&nbsp;");
+    $(".new.equation").click(editequation).removeClass("new");
   });
 
   /* ---------- Basic WYSIWYG functions ---------- */
