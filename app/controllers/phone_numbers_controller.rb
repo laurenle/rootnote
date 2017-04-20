@@ -13,7 +13,7 @@ class PhoneNumbersController < ApplicationController
   # POST /phone_numbers.json
   def create
     @phone_number = PhoneNumber.new(phone_number_params)
-    @phone_number.update_attribute(:verified, false)
+    # @phone_number.update_attribute(:verified, false)
 
     respond_to do |format|
       if @phone_number.save
