@@ -8,7 +8,10 @@ class Upload < ApplicationRecord
     thumb: '100x100>',
     square: '200x200#',
     medium: '300x300>'
-  }
+  },
+  path: 'public/system/:class/:hash.:extension',
+  url: '/system/:class/:hash.:extension',
+  hash_secret: Rails.application.secrets.url_obfuscation_token
 
   # validate the file has an image extension
   validates_attachment_content_type :file, :content_type => /\Aimage\/.*\Z/
