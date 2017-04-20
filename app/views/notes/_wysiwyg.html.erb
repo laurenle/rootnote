@@ -42,6 +42,7 @@
 		<% end %>
 		<hr>
 		<div id="editor" contentEditable="true"></div>
+		<div id="temp"></div>
 	</div>
 </div>
 
@@ -49,6 +50,7 @@
 	<div id="inserttabs">
 		<button type="button" id="uploadtab">Image</button>
 		<button type="button" id="pdftab">PDF</button>
+		<button type="button" id="eqtab">Equation</button>
 	</div>
 	<div id="insertpages">
 		<div class="insertpage" id="insertupload">
@@ -56,6 +58,9 @@
 		</div>
 		<div class="insertpage" id="insertpdf">
 			<%= render 'pdfs/index' %>
+		</div>
+		<div class="insertpage" id="inserteq">
+			<%= render 'notes/eqeditor' %>
 		</div>
 	</div>
 </div>

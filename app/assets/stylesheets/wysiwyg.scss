@@ -26,12 +26,13 @@ button#save.saving {opacity: 0.5;}
 #meter #text {position: absolute; left: 6pt; top: 6pt; color: #fff;}
 
 .explanation {text-decoration: underline;}
-.tooltip {position: absolute; width: 200pt; padding: 5pt; background: #eee; border: #ccc 1pt solid; font-size: 10pt; transition: opacity 0.5s;}
+.tooltip {position: absolute; max-width: 200pt; padding: 5pt; background: #eee; border: #ccc 1pt solid; font-size: 10pt; transition: opacity 0.5s;}
 
 #notecontainer {width: 100%; padding: 15pt; overflow: auto;}
 #note {width: 70%;}
 #note_title {width: 100%; border: none; font-size: 22pt; font-weight: normal; margin: 0;}
 #editor {width: 100%; min-height: 200pt;}
+#temp {display: none;}
 
 .resizable {display: inline-block; position: relative;}
 #resizer {width: 0; height: 0; border: #bbb 10pt solid; border-left-color: transparent; border-top-color: transparent; cursor: nwse-resize;}
@@ -43,6 +44,7 @@ button#save.saving {opacity: 0.5;}
 #insertpages {position: relative;}
 .insertpage {position: absolute; left: 0; top: 0; display: none; width: 100%; overflow: auto; background: #ddd; padding: 6pt;}
 .insertpage a, .insertpage button {margin-bottom: 10px;}
+.loadingcover {position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.8; background: #ddd image-url("ajax-loader.gif") center no-repeat;}
 
 #uploadcontainer, #pdfcontainer {display: flex; flex-flow: row wrap; align-items: center;}
 .upload, .pdf {width: 100px; height: 100px; margin: 0 6pt 6pt 0; background-position: center; background-repeat: no-repeat; display: flex; flex-flow: column nowrap; justify-content: center; align-items: stretch;}
@@ -52,4 +54,9 @@ button#save.saving {opacity: 0.5;}
 input.confirm {background: #fc4c49; transition: background-color 0.5s;}
 input.confirm:hover {background: #fc4c49;}
 
-.loadingcover {position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.8; background: #ddd image-url("ajax-loader.gif") center no-repeat;}
+#eqcontrols button {font-size: 9pt;}
+textarea#eqinput {width: 100%; height: 24pt; display: block; margin-bottom: 12pt;}
+#eqpreview {min-height: 50pt;}
+#eqpreview .MathJax_Display {margin: 0;}
+.equation {display: inline-block;}
+#editor .equation {cursor: pointer;}

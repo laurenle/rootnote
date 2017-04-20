@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag "wysiwyg" %>
+<%= render 'notes/mathjaxconfig' %>
 <%= javascript_include_tag "wysiwyg" %>
 
 <%= render 'wysiwyg', note: @note, folder: @folder, uploads: @uploads %>
